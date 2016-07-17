@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment.OnListFragmentInteractionListener;
-import ge.edu.freeuni.android.entertrainment.music.dummy.DummyContent.DummyItem;
+import ge.edu.freeuni.android.entertrainment.music.dummy.Song.DummyItem;
 
 import java.util.List;
 

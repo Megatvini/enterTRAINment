@@ -11,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ge.edu.freeuni.android.entertrainment.R;
-import ge.edu.freeuni.android.entertrainment.music.dummy.DummyContent;
-import ge.edu.freeuni.android.entertrainment.music.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import ge.edu.freeuni.android.entertrainment.music.dummy.Song;
+import ge.edu.freeuni.android.entertrainment.music.dummy.Song.DummyItem;
 
 /**
  * A fragment representing a list of Items.
@@ -70,7 +68,7 @@ public class SharedMusicFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new SharedMusicRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new SharedMusicRecyclerViewAdapter(Song.ITEMS, mListener));
         }
         return view;
     }
