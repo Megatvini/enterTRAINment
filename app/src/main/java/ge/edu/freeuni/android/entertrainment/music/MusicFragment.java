@@ -2,14 +2,11 @@ package ge.edu.freeuni.android.entertrainment.music;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +14,7 @@ import android.view.ViewGroup;
 
 import ge.edu.freeuni.android.entertrainment.R;
 
-public class MusicFragment extends Fragment  implements NavigationView.OnNavigationItemSelectedListener{
+public class MusicFragment extends Fragment{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -39,9 +36,6 @@ public class MusicFragment extends Fragment  implements NavigationView.OnNavigat
         super.onCreate(savedInstanceState);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-
-
-
 
     }
 
@@ -75,38 +69,6 @@ public class MusicFragment extends Fragment  implements NavigationView.OnNavigat
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.nav_camera:
-                // Handle the camera action
-                break;
-            case R.id.nav_gallery:
-
-                break;
-            case R.id.nav_slideshow:
-
-                break;
-            case R.id.nav_manage:
-
-                break;
-            case R.id.nav_share:
-
-                break;
-            case R.id.nav_send:
-
-                break;
-        }
-
-        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
 
