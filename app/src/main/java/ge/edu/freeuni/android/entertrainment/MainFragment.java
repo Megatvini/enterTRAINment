@@ -44,8 +44,10 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(null);
                 MusicFragment musicFragment = new MusicFragment();
                 fragmentTransaction.replace(R.id.fragment_container,musicFragment);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -57,6 +59,7 @@ public class MainFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 ChatFragment chatFragment = new ChatFragment();
                 fragmentTransaction.replace(R.id.fragment_container, chatFragment);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });

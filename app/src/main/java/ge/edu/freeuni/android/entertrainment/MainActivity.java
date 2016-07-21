@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_chat) {
             fragmentTransaction.replace(R.id.fragment_container, new ChatFragment());
+            fragmentTransaction.addToBackStack(null);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -99,7 +100,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
