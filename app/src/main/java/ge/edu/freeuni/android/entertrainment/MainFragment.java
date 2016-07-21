@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import ge.edu.freeuni.android.entertrainment.chat.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
 
 public class MainFragment extends Fragment {
@@ -38,8 +39,8 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_main, container, false);
-        Button button = (Button) view.findViewById(R.id.music_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button musicButton = (Button) view.findViewById(R.id.music_button);
+        musicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -48,6 +49,18 @@ public class MainFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+        Button chatButton = (Button) view.findViewById(R.id.chat_button);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                ChatFragment chatFragment = new ChatFragment();
+                fragmentTransaction.replace(R.id.fragment_container, chatFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
         return view;
     }
 

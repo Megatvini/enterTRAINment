@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import ge.edu.freeuni.android.entertrainment.chat.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.dummy.Song;
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_chat) {
             fragmentTransaction.replace(R.id.fragment_container, new ChatFragment());
         } else if (id == R.id.nav_gallery) {
 
