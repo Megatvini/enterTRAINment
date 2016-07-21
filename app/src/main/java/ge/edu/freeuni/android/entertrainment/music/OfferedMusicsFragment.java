@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ge.edu.freeuni.android.entertrainment.R;
-import ge.edu.freeuni.android.entertrainment.music.dummy.Song;
-import ge.edu.freeuni.android.entertrainment.music.dummy.Song.DummyItem;
+import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
+import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider.Song;
 
 /**
  * A fragment representing a list of Items.
@@ -68,7 +68,7 @@ public class OfferedMusicsFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new OfferMusicRecyclerViewAdapter(Song.ITEMS, mListener));
+            recyclerView.setAdapter(new OfferMusicRecyclerViewAdapter(MusicProvider.ITEMS, mListener));
         }
         return view;
     }
@@ -103,6 +103,6 @@ public class OfferedMusicsFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Song item);
     }
 }
