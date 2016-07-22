@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import ge.edu.freeuni.android.entertrainment.chat.ChatFragment;
+import ge.edu.freeuni.android.entertrainment.map.MapFragment;
 import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
 
 public class MainFragment extends Fragment {
@@ -59,6 +60,18 @@ public class MainFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 ChatFragment chatFragment = new ChatFragment();
                 fragmentTransaction.replace(R.id.fragment_container, chatFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        Button mapButton = (Button) view.findViewById(R.id.map_button);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                MapFragment mapFragment = new MapFragment();
+                fragmentTransaction.replace(R.id.fragment_container, mapFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
