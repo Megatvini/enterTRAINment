@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:background="@color/lightGray">
+
+    <TextView
+        android:id="@+id/group_chat_item_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Megatvini"/>
+
+    <TextView
+        android:id="@+id/group_chat_item_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/group_chat_item_username"
+        android:layout_toEndOf="@id/group_chat_item_username"
+        tools:text="14:07:21"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_alignBaseline="@id/group_chat_item_username"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/group_chat_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/group_chat_item_username"
+        android:layout_marginTop="10dp"
+        tools:text="adad"
+        android:textSize="14sp"/>
+</RelativeLayout>

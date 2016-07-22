@@ -1,13 +1,36 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ge.edu.freeuni.android.entertrainment.chat.GroupChatFragment">
+    tools:context="ge.edu.freeuni.android.entertrainment.chat.GroupChatFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/group_chat_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="FRAGMENT GROUP CHAT" />
+        android:layout_height="0dp"
+        android:layout_weight="0.9">
 
-</RelativeLayout>
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/group_chat_edit_text"
+            android:layout_width="0dp"
+            android:layout_weight="0.9"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/group_chat_btn_send_text"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_send_black_24dp" />
+    </LinearLayout>
+</LinearLayout>
