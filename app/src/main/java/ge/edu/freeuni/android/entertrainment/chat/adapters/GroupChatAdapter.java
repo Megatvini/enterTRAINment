@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ge.edu.freeuni.android.entertrainment.R;
@@ -22,7 +23,26 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
 
     public GroupChatAdapter(Context context, List<ChatEntry> chatEntryList) {
         this.context = context;
-        this.chatEntryList = chatEntryList;
+        this.chatEntryList = aggregateSameNames(chatEntryList);
+    }
+
+    private List<ChatEntry> aggregateSameNames(List<ChatEntry> chatEntryList) {
+        List<ChatEntry> res = new ArrayList<>();
+        for (int i=0; i<chatEntryList.size(); i++) {
+            ChatEntry curEntry = chatEntryList.get(i);
+            if (res.isEmpty())
+                res.add(curEntry);
+            else {
+                ChatEntry lastEntry = res.get(res.size() - 1);
+                if (lastEntry.getUsername().equals(curEntry.getUsername())) {
+                    lastEntry.setText(lastEntry.getText() + "\n" + curEntry.getText());
+                    lastEntry.setTimestamp(curEntry.getTimestamp());
+                } else {
+                    res.add(curEntry);
+                }
+            }
+        }
+        return res;
     }
 
     @Override
@@ -46,7 +66,13 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
 
     @Override
     public void messageReceived(ChatEntry chatEntry) {
-        chatEntryList.add(chatEntry);
+        if (chatEntryList.isEmpty()) {
+            chatEntryList.add(chatEntry);
+        } else {
+            ChatEntry lastEntry = chatEntryList.get(chatEntryList.size() - 1);
+            lastEntry.setText(lastEntry.getText() + "\n" + chatEntry.getText());
+            lastEntry.setTimestamp(chatEntry.getTimestamp());
+        }
         notifyDataSetChanged();
     }
 
