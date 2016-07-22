@@ -44,3 +44,4 @@ captures/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
+/build.gradle

@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
     tools:context="ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment"
-    tools:listitem="@layout/fragment_sharedmusic" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:id="@+id/controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/play_button"
+            android:background="@android:drawable/ic_media_play"
+            android:backgroundTint="@color/cardview_dark_background"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/play" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/controls"
+        android:id="@+id/list"
+        android:name="ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/fragment_sharedmusic" />
+</RelativeLayout>
+
+

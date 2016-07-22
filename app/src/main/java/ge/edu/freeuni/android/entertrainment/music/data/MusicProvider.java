@@ -26,7 +26,7 @@ public class MusicProvider {
     }
 
     private static Song createDummyItem(int position) {
-        return new Song(String.valueOf(position), "Item " + position, makeDetails(position));
+        return new Song(position+"",position+"",0,"");
     }
 
     private static String makeDetails(int position) {
@@ -40,18 +40,15 @@ public class MusicProvider {
 
     public static class Song {
         public final String id;
-        public final String content;
-        public final String details;
+        public final String name;
+        public final int rating;
+        public final String image;
 
-        public Song(String id, String content, String details) {
+        public Song(String id, String name, int rating, String image) {
             this.id = id;
-            this.content = content;
-            this.details = details;
-        }
-
-        @Override
-        public String toString() {
-            return content;
+            this.name = name;
+            this.rating = rating;
+            this.image = image;
         }
     }
 }

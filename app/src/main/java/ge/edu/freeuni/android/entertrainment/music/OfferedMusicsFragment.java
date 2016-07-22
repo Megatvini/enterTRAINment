@@ -68,7 +68,7 @@ public class OfferedMusicsFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new OfferMusicRecyclerViewAdapter(MusicProvider.ITEMS, mListener));
+            recyclerView.setAdapter(new OfferedMusicRecyclerViewAdapter(MusicProvider.ITEMS, mListener));
         }
         return view;
     }

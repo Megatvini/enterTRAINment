@@ -17,12 +17,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class OfferMusicRecyclerViewAdapter extends RecyclerView.Adapter<OfferMusicRecyclerViewAdapter.ViewHolder> {
+public class OfferedMusicRecyclerViewAdapter extends RecyclerView.Adapter<OfferedMusicRecyclerViewAdapter.ViewHolder> {
 
     private final List<Song> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public OfferMusicRecyclerViewAdapter(List<Song> items, OnListFragmentInteractionListener listener) {
+    public OfferedMusicRecyclerViewAdapter(List<Song> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -38,7 +38,7 @@ public class OfferMusicRecyclerViewAdapter extends RecyclerView.Adapter<OfferMus
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

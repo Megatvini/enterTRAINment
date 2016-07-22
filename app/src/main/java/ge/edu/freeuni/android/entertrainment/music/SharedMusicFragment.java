@@ -1,6 +1,11 @@
 package ge.edu.freeuni.android.entertrainment.music;
 
+import android.app.Application;
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,7 +14,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
+import java.io.IOException;
+import java.net.URI;
+
+import ge.edu.freeuni.android.entertrainment.MainApplication;
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider.Song;
@@ -22,9 +32,9 @@ import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider.Song;
  */
 public class SharedMusicFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
+    MediaPlayer mediaPlayer ;
+
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
@@ -35,7 +45,6 @@ public class SharedMusicFragment extends Fragment {
     public SharedMusicFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static SharedMusicFragment newInstance(int columnCount) {
         SharedMusicFragment fragment = new SharedMusicFragment();
@@ -52,6 +61,7 @@ public class SharedMusicFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
     }
 
     @Override
@@ -70,6 +80,38 @@ public class SharedMusicFragment extends Fragment {
             }
             recyclerView.setAdapter(new SharedMusicRecyclerViewAdapter(MusicProvider.ITEMS, mListener));
         }
+
+        final ImageButton playButton = (ImageButton) view.findViewById(R.id.play_button);
+        final String realRadio = "http://uk1-pn.webcast-server.net:8698/";
+        final String local = "http://192.168.0.100:50000";
+        final String local1 = "http://192.168.77.253:8080/song";
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainApplication application = (MainApplication) getActivity().getApplication();
+                if (!application.isPlaying()){
+                    PlayerService.startActionStart(getActivity(),local1);
+                    System.out.println("playing");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        playButton.setBackground(getContext().getResources().getDrawable(R.drawable.ic_pause_black_24dp,getContext().getTheme()));
+                    }else{
+                        playButton.setBackground(getContext().getResources().getDrawable(R.drawable.ic_pause_black_24dp));
+                    }
+                    application.setPlaying(true);
+                }else {
+                    PlayerService.startActionStop(getActivity());
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        playButton.setBackground(getContext().getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp,getContext().getTheme()));
+                    }else{
+                        playButton.setBackground(getContext().getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp));
+                    }
+                    application.setPlaying(false);
+                }
+
+
+            }
+        });
         return view;
     }
 
@@ -91,18 +133,7 @@ public class SharedMusicFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(Song item);
+        void onListFragmentInteraction(Song song);
     }
 }

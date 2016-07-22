@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(MusicProvider.Song item) {
+    public void onListFragmentInteraction(MusicProvider.Song song) {
 
     }
 }
