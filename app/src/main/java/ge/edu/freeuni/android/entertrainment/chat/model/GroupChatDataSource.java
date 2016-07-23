@@ -41,7 +41,11 @@ public class GroupChatDataSource {
                         Utils.runInMain(new Runnable() {
                             @Override
                             public void run() {
-                                notifyListeners(s);
+                                if (!s.equals("no data")) {
+                                    notifyListeners(s);
+                                } else {
+                                    notifyListeners();
+                                }
                             }
                         });
                     }
@@ -53,16 +57,29 @@ public class GroupChatDataSource {
                         if (ex != null)
                             ex.printStackTrace();
                         Log.d("Websocket", "has closed");
+                        notifyListenersConnectionClosed();
                     }
                 });
             }
         });
     }
 
+    private void notifyListenersConnectionClosed() {
+        for (ChatUpdateListener listener : listeners) {
+            listener.connectionClosed();
+        }
+    }
+
     private void notifyListeners(String s) {
         ChatEntry chatEntry = ChatEntry.fromJson(s);
         for (ChatUpdateListener listener : listeners) {
             listener.messageReceived(chatEntry);
+        }
+    }
+
+    private void notifyListeners() {
+        for (ChatUpdateListener listener : listeners) {
+            listener.noMessages();
         }
     }
 

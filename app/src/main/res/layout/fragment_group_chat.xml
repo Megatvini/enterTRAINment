@@ -20,7 +20,7 @@
         android:padding="5dp"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:background="@color/lightGray">
+        android:background="@color/colorWhite">
         <EditText
             android:id="@+id/group_chat_edit_text"
             android:layout_width="0dp"

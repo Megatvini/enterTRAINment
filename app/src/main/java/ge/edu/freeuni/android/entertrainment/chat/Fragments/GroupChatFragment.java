@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,5 +145,21 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         spinner.setVisibility(View.GONE);
         groupChatAdapter.messageReceived(chatEntry);
         recyclerView.smoothScrollToPosition(groupChatAdapter.getItemCount());
+    }
+
+    @Override
+    public void noMessages() {
+        spinner.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void connectionClosed() {
+        Log.d("Websocket", "initializing chatdatasource");
+
+        groupChatDataSource.clearListeners();
+        groupChatDataSource.closeConnection();
+
+        groupChatDataSource = new GroupChatDataSource();
+        groupChatDataSource.registerListener(this);
     }
 }

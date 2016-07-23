@@ -13,12 +13,11 @@ import java.util.List;
 
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatEntry;
-import ge.edu.freeuni.android.entertrainment.chat.model.ChatUpdateListener;
 
 /**
  * Created by Nika Doghonadze.
  */
-public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.ViewHolder> implements ChatUpdateListener {
+public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.ViewHolder> {
     private static int TYPE_MY = 0, TYPE_ELSE = 1;
     private Context context;
     private String myUsername;
@@ -79,7 +78,6 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
         return chatEntryList.size();
     }
 
-    @Override
     public void messageReceived(ChatEntry chatEntry) {
         if (chatEntryList.isEmpty()) {
             chatEntryList.add(chatEntry);
