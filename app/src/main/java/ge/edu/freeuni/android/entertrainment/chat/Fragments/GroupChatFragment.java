@@ -1,4 +1,4 @@
-package ge.edu.freeuni.android.entertrainment.chat;
+package ge.edu.freeuni.android.entertrainment.chat.Fragments;
 
 
 import android.content.DialogInterface;
@@ -20,15 +20,18 @@ import java.util.List;
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.chat.adapters.GroupChatAdapter;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatEntry;
+import ge.edu.freeuni.android.entertrainment.chat.model.ChatUpdateListener;
 import ge.edu.freeuni.android.entertrainment.chat.model.GroupChatDataSource;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GroupChatFragment extends Fragment {
+public class GroupChatFragment extends Fragment implements ChatUpdateListener{
     private GroupChatAdapter groupChatAdapter;
     private String username;
     private GroupChatDataSource groupChatDataSource;
+    private RecyclerView recyclerView;
+
 
     public GroupChatFragment() {
         // Required empty public constructor
@@ -43,29 +46,12 @@ public class GroupChatFragment extends Fragment {
 
 
         List<ChatEntry> chatEntryList = new ArrayList<>();
-        chatEntryList.add(new ChatEntry("Nika", "teqsti", 1469183621175L));
-        chatEntryList.add(new ChatEntry("Nika", "teqasdasddjhbahbjsdahdsasti", 1469183623175L));
-        chatEntryList.add(new ChatEntry("Megatvini", "teqsasdfdasfdfaadfsdti", 1469183625175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
-        chatEntryList.add(new ChatEntry("Alo", "teasdfdasfsdaasfdfasqsti", 1469183628175L));
         groupChatAdapter = new GroupChatAdapter(getContext(), chatEntryList);
 
         groupChatDataSource = new GroupChatDataSource();
-        groupChatDataSource.registerListener(groupChatAdapter);
+        groupChatDataSource.registerListener(this);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.group_chat_recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.group_chat_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(groupChatAdapter);
@@ -105,7 +91,7 @@ public class GroupChatFragment extends Fragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         username = editText.getText().toString();
-                        if (username.equals(""))
+                        if (username.replace(" ", "").equals(""))
                             username = null;
                     }
                 })
@@ -118,5 +104,25 @@ public class GroupChatFragment extends Fragment {
 
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        groupChatDataSource.clearListeners();
+        groupChatDataSource.closeConnection();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        groupChatDataSource.clearListeners();
+        groupChatDataSource.closeConnection();
+    }
+
+    @Override
+    public void messageReceived(ChatEntry chatEntry) {
+        groupChatAdapter.messageReceived(chatEntry);
+        recyclerView.smoothScrollToPosition(groupChatAdapter.getItemCount());
     }
 }

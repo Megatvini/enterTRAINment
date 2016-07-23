@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import ge.edu.freeuni.android.entertrainment.chat.ChatFragment;
+import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.dummy.Song;

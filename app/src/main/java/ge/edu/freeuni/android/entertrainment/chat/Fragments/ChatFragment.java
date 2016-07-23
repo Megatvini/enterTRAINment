@@ -1,4 +1,4 @@
-package ge.edu.freeuni.android.entertrainment.chat;
+package ge.edu.freeuni.android.entertrainment.chat.Fragments;
 
 import android.content.Context;
 import android.net.Uri;

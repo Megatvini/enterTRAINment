@@ -2,6 +2,7 @@ package ge.edu.freeuni.android.entertrainment.chat.model;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.http.AsyncHttpClient;
@@ -21,6 +22,7 @@ public class GroupChatDataSource {
         listeners = new HashSet<>();
 
         String url = "ws://entertrainment.herokuapp.com/webapi/groupchat";
+//        url = "ws://192.168.76.224:8080/webapi/groupchat";
         webSocketFuture = AsyncHttpClient.getDefaultInstance()
                 .websocket(url, "my-protocol", new AsyncHttpClient.WebSocketConnectCallback() {
             @Override
@@ -41,8 +43,8 @@ public class GroupChatDataSource {
     }
 
     private void notifyListenersFromMainThread(final String s) {
-        Handler mainHandler = new Handler(Looper.getMainLooper());
         if (Looper.myLooper() != Looper.getMainLooper()) {
+            Handler mainHandler = new Handler(Looper.getMainLooper());
             mainHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -74,7 +76,18 @@ public class GroupChatDataSource {
     }
 
     public void sendMessage(ChatEntry entry) {
-        webSocketFuture.tryGet().send(entry.toString());
+        WebSocket webSocket = webSocketFuture.tryGet();
+        if (webSocket != null) {
+            webSocket.send(entry.toString());
+        } else {
+            Log.d("WebSocket", "is null");
+        }
     }
 
+
+    public void closeConnection() {
+        WebSocket webSocket = webSocketFuture.tryGet();
+        if (webSocket != null)
+            webSocket.close();
+    }
 }
