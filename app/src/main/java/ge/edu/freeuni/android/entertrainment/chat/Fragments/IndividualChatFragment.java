@@ -82,7 +82,9 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
                 }
 
                 String text = editText.getText().toString();
-                if (text.equals("") || findPairButton.getVisibility() == View.VISIBLE)
+                if (text.equals("") ||
+                        findPairButton.getVisibility() == View.VISIBLE ||
+                        spinner.getVisibility() == View.VISIBLE)
                     return;
 
                 ChatEntry chatEntry = new ChatEntry(username, text, System.currentTimeMillis());
