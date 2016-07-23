@@ -45,7 +45,7 @@ public class ChatEntry {
     }
 
     public String getTimeText() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:SS");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         Date date = new Date(timestamp);
         return simpleDateFormat.format(date);
     }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,8 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
     private String username;
     private GroupChatDataSource groupChatDataSource;
     private RecyclerView recyclerView;
+    private ProgressBar spinner;
+
 
 
     public GroupChatFragment() {
@@ -80,6 +83,8 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
                 editText.setText("");
             }
         });
+
+        spinner = (ProgressBar) view.findViewById(R.id.progressBar1);
 
         return view;
     }
@@ -133,6 +138,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
 
     @Override
     public void messageReceived(ChatEntry chatEntry) {
+        spinner.setVisibility(View.GONE);
         groupChatAdapter.messageReceived(chatEntry);
         recyclerView.smoothScrollToPosition(groupChatAdapter.getItemCount());
     }
