@@ -12,10 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.chat.Constants;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 
 public class ChatFragment extends Fragment {
@@ -32,6 +40,7 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        initUsername();
         view =  inflater.inflate(R.layout.fragment_chat, container, false);
         viewPager = (ViewPager) view.findViewById(R.id.chat_viewpager);
         setupViewPager(viewPager);
@@ -106,6 +115,28 @@ public class ChatFragment extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
+        }
+    }
+
+    private void initUsername() {
+        String username = Utils.readUsernameFromPreferences(getContext());
+
+        if (username == null) {
+            String url = "http://" + Constants.SERVER_ADDRESS + "/webapi/chatname";
+
+            AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+            asyncHttpClient.get(url, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Utils.runInMain(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.saveUsernameInSharedPreferences(getContext(), response);
+                        }
+                    });
+                }
+            });
         }
     }
 }

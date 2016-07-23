@@ -1,15 +1,17 @@
 package ge.edu.freeuni.android.entertrainment.chat.model;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
+import com.koushikdutta.async.callback.CompletedCallback;
 import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.WebSocket;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import ge.edu.freeuni.android.entertrainment.chat.Constants;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 /**
  * Created by Nika Doghonadze.
@@ -20,9 +22,11 @@ public class GroupChatDataSource {
 
     public GroupChatDataSource() {
         listeners = new HashSet<>();
+        initWebsocketConnection();
+    }
 
-        String url = "ws://entertrainment.herokuapp.com/webapi/groupchat";
-//        url = "ws://192.168.76.224:8080/webapi/groupchat";
+    private void initWebsocketConnection() {
+        String url = "ws://" + Constants.SERVER_ADDRESS + "/webapi/groupchat";
         webSocketFuture = AsyncHttpClient.getDefaultInstance()
                 .websocket(url, "my-protocol", new AsyncHttpClient.WebSocketConnectCallback() {
             @Override
@@ -34,26 +38,25 @@ public class GroupChatDataSource {
                 webSocket.setStringCallback(new WebSocket.StringCallback() {
                     @Override
                     public void onStringAvailable(final String s) {
-                        notifyListenersFromMainThread(s);
+                        Utils.runInMain(new Runnable() {
+                            @Override
+                            public void run() {
+                                notifyListeners(s);
+                            }
+                        });
+                    }
+                });
+
+                webSocket.setClosedCallback(new CompletedCallback() {
+                    @Override
+                    public void onCompleted(Exception ex) {
+                        if (ex != null)
+                            ex.printStackTrace();
+                        Log.d("Websocket", "has closed");
                     }
                 });
             }
         });
-
-    }
-
-    private void notifyListenersFromMainThread(final String s) {
-        if (Looper.myLooper() != Looper.getMainLooper()) {
-            Handler mainHandler = new Handler(Looper.getMainLooper());
-            mainHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    notifyListeners(s);
-                }
-            });
-        } else {
-            notifyListeners(s);
-        }
     }
 
     private void notifyListeners(String s) {

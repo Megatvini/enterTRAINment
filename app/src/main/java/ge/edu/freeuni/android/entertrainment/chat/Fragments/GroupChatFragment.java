@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 import ge.edu.freeuni.android.entertrainment.chat.adapters.GroupChatAdapter;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatEntry;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatUpdateListener;
@@ -44,6 +45,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_chat, container, false);
 
+        initUsername();
 
         List<ChatEntry> chatEntryList = new ArrayList<>();
         groupChatAdapter = new GroupChatAdapter(getContext(), chatEntryList);
@@ -62,8 +64,11 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
             @Override
             public void onClick(View ignored) {
                 if (username == null || username.equals("")) {
+                    initUsername();
+                }
+
+                if (username == null || username.equals("")) {
                     showInputDialog();
-                    return;
                 }
 
                 String text = editText.getText().toString();
@@ -77,6 +82,12 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         });
 
         return view;
+    }
+
+    private void initUsername() {
+        if (username == null) {
+            username = Utils.readUsernameFromPreferences(getContext());
+        }
     }
 
 
