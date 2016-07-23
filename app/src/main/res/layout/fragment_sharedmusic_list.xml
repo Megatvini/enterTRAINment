@@ -7,24 +7,24 @@
     tools:context="ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <RelativeLayout
         android:layout_centerHorizontal="true"
         android:id="@+id/controls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageButton
+            android:layout_centerHorizontal="true"
             android:id="@+id/play_button"
-            android:background="@android:drawable/ic_media_play"
-            android:backgroundTint="@color/cardview_dark_background"
+            android:background="@drawable/ic_play_arrow_black_24dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:contentDescription="@string/play" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/controls"
-        android:id="@+id/list"
+        android:id="@+id/shared_list"
         android:name="ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
