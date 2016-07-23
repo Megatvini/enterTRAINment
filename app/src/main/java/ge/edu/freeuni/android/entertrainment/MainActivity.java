@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import ge.edu.freeuni.android.entertrainment.chat.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
-import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
+import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChatFragment.OnFragmentInteractionListener,
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(MusicProvider.Song song) {
+    public void onListFragmentInteraction(Song song) {
 
     }
 }
