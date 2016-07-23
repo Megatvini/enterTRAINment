@@ -1,6 +1,7 @@
 package ge.edu.freeuni.android.entertrainment.chat.model;
 
-import android.icu.util.Calendar;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,5 +48,31 @@ public class ChatEntry {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:SS");
         Date date = new Date(timestamp);
         return simpleDateFormat.format(date);
+    }
+
+    @Override
+    public String toString() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", username);
+            jsonObject.put("message_text", text);
+            jsonObject.put("timestamp", timestamp);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    public static ChatEntry fromJson(String s) {
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            String username = jsonObject.getString("username");
+            String message_text = jsonObject.getString("message_text");
+            long timestamp = jsonObject.getLong("timestamp");
+            return new ChatEntry(username, message_text, timestamp);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

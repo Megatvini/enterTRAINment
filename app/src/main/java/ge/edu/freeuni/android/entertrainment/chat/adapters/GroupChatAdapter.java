@@ -70,8 +70,12 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
             chatEntryList.add(chatEntry);
         } else {
             ChatEntry lastEntry = chatEntryList.get(chatEntryList.size() - 1);
-            lastEntry.setText(lastEntry.getText() + "\n" + chatEntry.getText());
-            lastEntry.setTimestamp(chatEntry.getTimestamp());
+            if (lastEntry.getUsername().equals(chatEntry.getUsername())) {
+                lastEntry.setText(lastEntry.getText() + "\n" + chatEntry.getText());
+                lastEntry.setTimestamp(chatEntry.getTimestamp());
+            } else {
+                chatEntryList.add(chatEntry);
+            }
         }
         notifyDataSetChanged();
     }

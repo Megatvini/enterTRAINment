@@ -42,7 +42,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFrag(new GroupChatFragment(), "Group Chat");
         adapter.addFrag(new IndividualChatFragment(), "Individual Chat");
         viewPager.setAdapter(adapter);

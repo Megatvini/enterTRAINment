@@ -24,7 +24,7 @@
             android:id="@+id/group_chat_edit_text"
             android:layout_width="0dp"
             android:layout_weight="0.9"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 
         <ImageView
             android:id="@+id/group_chat_btn_send_text"
