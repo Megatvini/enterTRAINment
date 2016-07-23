@@ -1,11 +1,9 @@
 package ge.edu.freeuni.android.entertrainment.music;
 
-import android.app.IntentService;
 import android.app.Service;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
@@ -14,18 +12,14 @@ import java.io.IOException;
 
 import ge.edu.freeuni.android.entertrainment.MainApplication;
 
-/**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p>
- * helper methods.
- */
-public class PlayerService extends Service  implements MediaPlayer.OnPreparedListener{
+
+public class PlayerService extends Service  implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener{
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     private static final String ACTION_START = "ge.edu.freeuni.android.entertrainment.music.action.START";
     private static final String ACTION_STOP = "ge.edu.freeuni.android.entertrainment.music.action.STOP";
 
     private static final String PATH_KEY = "ge.edu.freeuni.android.entertrainment.music.action.path";
+    public static final String UPDATE_PLAYING_KEY = "ge.edu.freeuni.android.entertrainment.music.action.update";
 
 
 
@@ -48,12 +42,7 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
         return super.onStartCommand(intent,flags,startId);
     }
 
-    /**
-     * Starts this service to perform action Foo with the given parameters. If
-     * the service is already performing a task this action will be queued.
-     *
-     * @see IntentService
-     */
+
     public static void startActionStart(Context context, String path) {
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_START);
@@ -62,12 +51,6 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
         context.startService(intent);
     }
 
-    /**
-     * Starts this service to perform action Baz with the given parameters. If
-     * the service is already performing a task this action will be queued.
-     *
-     * @see IntentService
-     */
     public static void startActionStop(Context context) {
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_STOP);
@@ -86,11 +69,10 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
             mediaPlayer = new MediaPlayer();
             mainApplication.setMediaPlayer(mediaPlayer);
             mediaPlayer.setOnPreparedListener(this);
+            mediaPlayer.setOnErrorListener(this);
             mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
 
         }
-
-
         mainApplication.getWifiLock().acquire();
         try {
             mediaPlayer.setDataSource(path);
@@ -99,7 +81,11 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
             System.out.println("prepare called");
         } catch (IOException e) {
             e.printStackTrace();
-            mainApplication.getWifiLock().acquire();
+            mainApplication.getWifiLock().release();
+        }
+        catch (IllegalStateException e){
+            e.printStackTrace();
+            mediaPlayer.reset();
         }
 
 
@@ -116,6 +102,7 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
             mediaPlayer.reset();
         }
         mainApplication.getWifiLock().release();
+        updateActivity(false);
 
     }
 
@@ -123,5 +110,19 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
     public void onPrepared(MediaPlayer mediaPlayer) {
         System.out.println("on prepared");
         mediaPlayer.start();
+        updateActivity(true);
+    }
+
+    private void updateActivity(boolean playing){
+        Intent intent = new Intent(UPDATE_PLAYING_KEY);
+        ((MainApplication) getApplication()).setPlaying(playing);
+        getApplicationContext().sendBroadcast(intent);
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+        System.out.println("error");
+        updateActivity(false);
+        return false;
     }
 }
