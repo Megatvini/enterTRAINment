@@ -1,6 +1,7 @@
 package ge.edu.freeuni.android.entertrainment.chat.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +19,15 @@ import ge.edu.freeuni.android.entertrainment.chat.model.ChatUpdateListener;
  * Created by Nika Doghonadze.
  */
 public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.ViewHolder> implements ChatUpdateListener {
+    private static int TYPE_MY = 0, TYPE_ELSE = 1;
     private Context context;
+    private String myUsername;
     private List<ChatEntry> chatEntryList;
 
-    public GroupChatAdapter(Context context, List<ChatEntry> chatEntryList) {
+    public GroupChatAdapter(Context context, List<ChatEntry> chatEntryList, String myUsername) {
         this.context = context;
         this.chatEntryList = aggregateSameNames(chatEntryList);
+        this.myUsername = myUsername;
     }
 
     private List<ChatEntry> aggregateSameNames(List<ChatEntry> chatEntryList) {
@@ -47,7 +51,12 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.group_chat_item, parent, false);
+        View view;
+        if (viewType == TYPE_MY) {
+            view = LayoutInflater.from(context).inflate(R.layout.group_chat_item_right, parent, false);
+        } else {
+            view = LayoutInflater.from(context).inflate(R.layout.group_chat_item_left, parent, false);
+        }
         return new ViewHolder(view);
     }
 
@@ -57,6 +66,12 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
         holder.username.setText(chatEntry.getUsername());
         holder.userText.setText(chatEntry.getText());
         holder.date.setText(chatEntry.getTimeText());
+
+        if (chatEntry.getUsername().equals(myUsername)) {
+            holder.username.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+        } else {
+            holder.username.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
+        }
     }
 
     @Override
@@ -88,6 +103,17 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
             username = (TextView) itemView.findViewById(R.id.group_chat_item_username);
             userText = (TextView) itemView.findViewById(R.id.group_chat_item_text);
             date = (TextView) itemView.findViewById(R.id.group_chat_item_date);
+        }
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        ChatEntry chatEntry = chatEntryList.get(position);
+        if (chatEntry.getUsername().equals(myUsername)) {
+            return TYPE_MY;
+        } else {
+            return TYPE_ELSE;
         }
     }
 }

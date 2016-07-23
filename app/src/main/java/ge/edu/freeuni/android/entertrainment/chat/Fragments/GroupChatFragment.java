@@ -51,7 +51,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         initUsername();
 
         List<ChatEntry> chatEntryList = new ArrayList<>();
-        groupChatAdapter = new GroupChatAdapter(getContext(), chatEntryList);
+        groupChatAdapter = new GroupChatAdapter(getContext(), chatEntryList, username);
 
         groupChatDataSource = new GroupChatDataSource();
         groupChatDataSource.registerListener(this);

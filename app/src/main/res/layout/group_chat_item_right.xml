@@ -4,28 +4,30 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
+    android:padding="@dimen/medium_padding"
     android:background="@color/lightGray">
 
     <TextView
         android:id="@+id/group_chat_item_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/username_text_size"
         android:textStyle="bold"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         tools:text="Megatvini"/>
 
     <TextView
         android:id="@+id/group_chat_item_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/group_chat_item_username"
-        android:layout_toEndOf="@id/group_chat_item_username"
+        android:layout_toLeftOf="@id/group_chat_item_username"
+        android:layout_toStartOf="@id/group_chat_item_username"
         tools:text="14:07:21"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginRight="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
         android:layout_alignBaseline="@id/group_chat_item_username"
-        android:textSize="12sp"/>
+        android:textSize="@dimen/chat_date_text_size"/>
 
     <TextView
         android:id="@+id/group_chat_item_text"
@@ -34,5 +36,7 @@
         android:layout_below="@id/group_chat_item_username"
         android:layout_marginTop="10dp"
         tools:text="adad"
-        android:textSize="14sp"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="@dimen/chat_date_text_size"/>
 </RelativeLayout>

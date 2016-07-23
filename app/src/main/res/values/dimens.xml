@@ -8,4 +8,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="medium_padding">20dp</dimen>
+    <dimen name="username_text_size">18sp</dimen>
+    <dimen name="small_margin">10dp</dimen>
+    <dimen name="chat_date_text_size">12sp</dimen>
+    <dimen name="chat_text_size">14sp</dimen>
 </resources>
