@@ -9,4 +9,5 @@ public interface Constants {
 //    String SERVER_ADDRESS = "192.168.76.224:8080";
     String USERNAME_KEY = "USERNAME";
     int CHAT_ITEM_DIVIDER_HEIGHT = 10;
+    String PAIR_FOUND_CODE = "0b83465e-000b-4361-901f-e83840c6a29f";
 }

@@ -17,13 +17,13 @@ import ge.edu.freeuni.android.entertrainment.chat.model.ChatEntry;
 /**
  * Created by Nika Doghonadze.
  */
-public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.ViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private static int TYPE_MY = 0, TYPE_ELSE = 1;
     private Context context;
     private String myUsername;
     private List<ChatEntry> chatEntryList;
 
-    public GroupChatAdapter(Context context, List<ChatEntry> chatEntryList, String myUsername) {
+    public ChatAdapter(Context context, List<ChatEntry> chatEntryList, String myUsername) {
         this.context = context;
         this.chatEntryList = aggregateSameNames(chatEntryList);
         this.myUsername = myUsername;
@@ -90,6 +90,11 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                 chatEntryList.add(chatEntry);
             }
         }
+        notifyDataSetChanged();
+    }
+
+    public void clearEntries() {
+        chatEntryList.clear();
         notifyDataSetChanged();
     }
 

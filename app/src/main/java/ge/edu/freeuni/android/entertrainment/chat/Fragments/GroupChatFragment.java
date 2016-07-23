@@ -22,7 +22,7 @@ import java.util.List;
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.chat.Constants;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
-import ge.edu.freeuni.android.entertrainment.chat.adapters.GroupChatAdapter;
+import ge.edu.freeuni.android.entertrainment.chat.adapters.ChatAdapter;
 import ge.edu.freeuni.android.entertrainment.chat.helper.VerticalSpaceItemDecoration;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatEntry;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatUpdateListener;
@@ -32,7 +32,7 @@ import ge.edu.freeuni.android.entertrainment.chat.model.GroupChatDataSource;
  * A simple {@link Fragment} subclass.
  */
 public class GroupChatFragment extends Fragment implements ChatUpdateListener{
-    private GroupChatAdapter groupChatAdapter;
+    private ChatAdapter chatAdapter;
     private String username;
     private GroupChatDataSource groupChatDataSource;
     private RecyclerView recyclerView;
@@ -54,7 +54,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         initUsername();
 
         List<ChatEntry> chatEntryList = new ArrayList<>();
-        groupChatAdapter = new GroupChatAdapter(getContext(), chatEntryList, username);
+        chatAdapter = new ChatAdapter(getContext(), chatEntryList, username);
 
         groupChatDataSource = new GroupChatDataSource();
         groupChatDataSource.registerListener(this);
@@ -63,7 +63,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(Constants.CHAT_ITEM_DIVIDER_HEIGHT));
-        recyclerView.setAdapter(groupChatAdapter);
+        recyclerView.setAdapter(chatAdapter);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.group_chat_btn_send_text);
         final EditText editText = (EditText) view.findViewById(R.id.group_chat_edit_text);
@@ -143,8 +143,8 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
     @Override
     public void messageReceived(ChatEntry chatEntry) {
         spinner.setVisibility(View.GONE);
-        groupChatAdapter.messageReceived(chatEntry);
-        recyclerView.smoothScrollToPosition(groupChatAdapter.getItemCount());
+        chatAdapter.messageReceived(chatEntry);
+        recyclerView.smoothScrollToPosition(chatAdapter.getItemCount());
     }
 
     @Override
@@ -161,5 +161,10 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
 
         groupChatDataSource = new GroupChatDataSource();
         groupChatDataSource.registerListener(this);
+    }
+
+    @Override
+    public void connectionFound() {
+
     }
 }

@@ -4,10 +4,50 @@
     android:layout_height="match_parent"
     tools:context=".chat.Fragments.IndividualChatFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Button
+        android:id="@+id/random_chat_find_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/random_chat_find_pair_btn_text"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+
+    <LinearLayout
+        android:id="@+id/random_chat_input_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="FRAGMENT INDIVIDUAL CHAT" />
+        android:layout_height="50dp"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite">
+        <EditText
+            android:id="@+id/random_chat_edit_text"
+            android:layout_width="0dp"
+            android:layout_weight="0.9"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/random_chat_btn_send_text"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_send_black_24dp" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/random_chat_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/random_chat_input_layout"
+        android:visibility="gone">
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

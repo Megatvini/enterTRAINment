@@ -7,4 +7,5 @@ public interface ChatUpdateListener {
     void messageReceived(ChatEntry chatEntry);
     void noMessages();
     void connectionClosed();
+    void connectionFound();
 }
