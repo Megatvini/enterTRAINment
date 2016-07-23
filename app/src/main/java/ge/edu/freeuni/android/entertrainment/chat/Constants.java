@@ -8,4 +8,5 @@ public interface Constants {
     String SERVER_ADDRESS = "entertrainment.herokuapp.com";
 //    String SERVER_ADDRESS = "192.168.76.224:8080";
     String USERNAME_KEY = "USERNAME";
+    int CHAT_ITEM_DIVIDER_HEIGHT = 10;
 }

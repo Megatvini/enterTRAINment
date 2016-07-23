@@ -116,4 +116,6 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
             return TYPE_ELSE;
         }
     }
+
+
 }

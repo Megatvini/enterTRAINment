@@ -19,8 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.chat.Constants;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
 import ge.edu.freeuni.android.entertrainment.chat.adapters.GroupChatAdapter;
+import ge.edu.freeuni.android.entertrainment.chat.helper.VerticalSpaceItemDecoration;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatEntry;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatUpdateListener;
 import ge.edu.freeuni.android.entertrainment.chat.model.GroupChatDataSource;
@@ -59,6 +61,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         recyclerView = (RecyclerView) view.findViewById(R.id.group_chat_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(Constants.CHAT_ITEM_DIVIDER_HEIGHT));
         recyclerView.setAdapter(groupChatAdapter);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.group_chat_btn_send_text);
