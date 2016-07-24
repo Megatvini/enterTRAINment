@@ -1,16 +1,12 @@
 package ge.edu.freeuni.android.entertrainment.music.data;
 
 
-import android.support.annotation.NonNull;
-
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -39,24 +35,38 @@ public class PlaylistClient {
     }
 
     public void upvote(String path){
-        System.out.println(path);
+        vote(path);
+    }
+    public void vote(String path){
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-        asyncHttpClient.post(path,null,new JsonHttpResponseHandler(){
+        asyncHttpClient.post(path, null, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 handleNewPlaylistData(response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
     }
 
     private void handleNewPlaylistData(JSONArray response) {
         List<Song> songList = getSongsFromJsonArray(response);
+        String voted = songList.get(0).getVoted();
+        System.out.println("souted : "+ voted);
         if(songList.size() != 0)
             PlaylistClient.this.musicProvider.onNewPlayListData(songList);
     }
 
-    public void downvote(String id, String downvote){
-
+    public void downvote(String path){
+        vote(path);
     }
 
 

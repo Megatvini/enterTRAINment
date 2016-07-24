@@ -1,12 +1,20 @@
 package ge.edu.freeuni.android.entertrainment.music;
 
+import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -36,10 +44,23 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        System.out.println("re layouting");
+        Context context = holder.mView.getContext();
         holder.song = mValues.get(position);
         holder.songName.setText(mValues.get(position).name);
         holder.songRating.setText(mValues.get(position).rating+"");
+
+        String path = holder.song.getImage();
+        if (!path.equals(""))
+            Picasso.with(holder.mView.getContext()).load(path).into(holder.songImage);
+
+        if (holder.song.getVoted().equals("up")){
+            setTint(holder.upvote, context, R.color.colorAccent);
+            setTint(holder.downvote, context, R.color.cardview_shadow_start_color);
+        }
+        if (holder.song.getVoted().equals("down")){
+            setTint(holder.downvote,context, R.color.colorAccent);
+            setTint(holder.upvote,context, R.color.cardview_shadow_start_color);
+        }
 
         holder.upvote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,19 +77,26 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
         });
     }
 
+    private void setTint(ImageButton button, Context context, int color) {
+        Drawable mWrappedDrawable = button.getDrawable().mutate();
+        mWrappedDrawable = DrawableCompat.wrap(mWrappedDrawable);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            DrawableCompat.setTint(mWrappedDrawable, context.getResources().getColor(color,context.getTheme()));
+        }else {
+            DrawableCompat.setTint(mWrappedDrawable, context.getResources().getColor(color));
+        }
+        DrawableCompat.setTintMode(mWrappedDrawable, PorterDuff.Mode.SRC_IN);
+    }
+
     @Override
     public int getItemCount() {
 
-        int size = mValues.size();
-        System.out.println("size: "+size);
-        return size;
+        return mValues.size();
     }
 
     public void setData(List<Song> songs) {
-        System.out.println("l1:"+songs.size());
         this.mValues.clear();
         this.mValues.addAll(songs);
-        System.out.println("l2:"+mValues.size());
 //        notifyDataSetChanged();
 
 //        notifyItemInserted(mValues.size());
@@ -94,8 +122,8 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
             songName = (TextView) view.findViewById(R.id.song_name);
             songRating = (TextView) view.findViewById(R.id.song_rating);
 
-            downvote = (ImageButton)view.findViewById(R.id.downvote);
-            upvote = (ImageButton)view.findViewById(R.id.upvote);
+            downvote = (ImageButton) view.findViewById(R.id.downvote);
+            upvote = (ImageButton) view.findViewById(R.id.upvote);
         }
 
     }

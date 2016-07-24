@@ -8,15 +8,9 @@ import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.WebSocket;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.List;
-
 import ge.edu.freeuni.android.entertrainment.chat.Constants;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
-import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
 public class SharedMusicService  {
     protected Future<WebSocket> webSocketFuture;
@@ -69,13 +63,11 @@ public class SharedMusicService  {
     }
 
     public void notifyListeners(String s) {
-        try {
-            JSONArray  jsonArray= new JSONArray(s);
-            List<Song> songs = Utils.getSongsFromJsonArray(jsonArray);
-            musicProvider.onNewPlayListData(songs);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        //JSONArray  jsonArray= new JSONArray(s);
+        //List<Song> songs = Utils.getSongsFromJsonArray(jsonArray);
+        System.out.println("message: "+s);
+//        musicProvider.loadData();
+
     }
 
     public void setListener(SharedMusicFragment listener) {

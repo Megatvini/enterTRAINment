@@ -67,7 +67,6 @@ public class Utils {
                 try {
                     JSONObject musicJson = (JSONObject) response.get(i);
                     Song song = new Song(musicJson.getString("voted"),musicJson.getString("id"), musicJson.getString("name"), musicJson.getInt("rating"), musicJson.getString("imagePath"));
-                    System.out.println(song.getRating());
                     songList.add(song);
                 } catch (JSONException e) {
                     e.printStackTrace();

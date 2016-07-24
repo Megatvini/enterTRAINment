@@ -50,7 +50,7 @@ public class MusicProvider implements  VoteListener {
 
     @Override
     public void downvote(String id) {
-        this.playlistClient.downvote(id,path);
+        this.playlistClient.downvote(path+"/"+id+"/downvote");
     }
 
 

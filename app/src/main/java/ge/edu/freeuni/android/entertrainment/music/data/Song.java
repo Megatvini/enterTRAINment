@@ -50,7 +50,7 @@ public  class Song  {
         this.image = image;
     }
 
-    public String isVoted() {
+    public String getVoted() {
         return voted;
     }
 

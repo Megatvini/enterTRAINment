@@ -10,6 +10,6 @@ public interface Constants {
     String USERNAME_KEY = "USERNAME";
     int CHAT_ITEM_DIVIDER_HEIGHT = 10;
     String PAIR_FOUND_CODE = "0b83465e-000b-4361-901f-e83840c6a29f";
-    public static final String HOST = "http://192.168.77.253:8080";
-    public static final String HOST_IP = "192.168.77.253:8080";
+    String HOST = "http://192.168.122.1:8080";
+    String HOST_IP = "192.168.77.253:8080";
 }
