@@ -1,8 +1,6 @@
 package ge.edu.freeuni.android.entertrainment.music.data;
 
-import io.realm.RealmObject;
-
-public  class Song extends RealmObject {
+public  class Song  {
     public  String id;
     public  String name;
     public  int rating;

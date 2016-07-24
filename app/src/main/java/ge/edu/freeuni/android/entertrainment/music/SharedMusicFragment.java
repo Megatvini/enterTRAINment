@@ -21,7 +21,7 @@ import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
 public class SharedMusicFragment extends Fragment {
 
-    public static final String HOST = "http://192.168.122.1:8080";
+    public static final String HOST = "http://192.168.77.253:8080";
     public static final String PLAYLIST_ENDPOINT = HOST+"/webapi/songs/shared";
     private MusicProvider musicProvider;
 

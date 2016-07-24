@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import io.realm.Realm;
 
 public class PlaylistClient {
 
