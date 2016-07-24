@@ -3,14 +3,11 @@ package ge.edu.freeuni.android.entertrainment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import ge.edu.freeuni.android.entertrainment.map.MapFragment;
 
 public class MainFragment extends Fragment {
 
@@ -61,11 +58,7 @@ public class MainFragment extends Fragment {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                MapFragment mapFragment = new MapFragment();
-                fragmentTransaction.replace(R.id.fragment_container, mapFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                mainActivity.onNavigationItemSelected(navMenu.findItem(R.id.nav_map));
             }
         });
 

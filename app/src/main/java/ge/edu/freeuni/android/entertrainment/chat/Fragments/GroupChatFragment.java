@@ -158,6 +158,9 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         groupChatDataSource.clearListeners();
         groupChatDataSource.closeConnection();
 
+        chatAdapter = new ChatAdapter(getContext(), new ArrayList<ChatEntry>(), username);
+        recyclerView.setAdapter(chatAdapter);
+
         groupChatDataSource = new GroupChatDataSource();
         groupChatDataSource.registerListener(this);
     }

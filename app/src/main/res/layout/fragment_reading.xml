@@ -1,0 +1,36 @@
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ge.edu.freeuni.android.entertrainment.reading.ReadingFragment"
+    android:id="@+id/reading_view_flipper">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="100sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="2"
+        android:textSize="100sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="3"
+        android:textSize="100sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="4"
+        android:textSize="100sp"/>
+
+</ViewFlipper>

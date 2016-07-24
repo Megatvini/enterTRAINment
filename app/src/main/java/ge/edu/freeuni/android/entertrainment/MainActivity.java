@@ -15,10 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
+import ge.edu.freeuni.android.entertrainment.map.MapFragment;
 import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
+import ge.edu.freeuni.android.entertrainment.reading.ReadingFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChatFragment.OnFragmentInteractionListener,
@@ -102,10 +104,10 @@ public class MainActivity extends AppCompatActivity
             replaceFragmentContainer(new ChatFragment());
         } else if (id == R.id.nav_music) {
             replaceFragmentContainer(new MusicFragment());
-        } else if (id == R.id.nav_slideshow) {
-            return false;
-        } else if (id == R.id.nav_manage) {
-            return false;
+        } else if (id == R.id.nav_reading) {
+            replaceFragmentContainer(new ReadingFragment());
+        } else if (id == R.id.nav_map) {
+            replaceFragmentContainer(new MapFragment());
         } else if (id == R.id.nav_share) {
             return false;
         } else if (id == R.id.nav_send) {
