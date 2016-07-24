@@ -15,4 +15,6 @@
     <string name="song_image">song image</string>
     <string name="upvote">upvote</string>
     <string name="play">play</string>
+    <string name="random_chat_find_pair_btn_text">find pair</string>
+    <string name="android_chat_message_hint">Write a text</string>
 </resources>
