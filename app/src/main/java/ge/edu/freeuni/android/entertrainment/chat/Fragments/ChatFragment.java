@@ -134,7 +134,6 @@ public class ChatFragment extends Fragment {
             asyncHttpClient.get(url, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
                     Utils.runInMain(new Runnable() {
                         @Override
                         public void run() {

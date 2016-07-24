@@ -51,13 +51,13 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_chat, container, false);
 
+        groupChatDataSource = new GroupChatDataSource();
+        groupChatDataSource.registerListener(this);
+
         initUsername();
 
         List<ChatEntry> chatEntryList = new ArrayList<>();
         chatAdapter = new ChatAdapter(getContext(), chatEntryList, username);
-
-        groupChatDataSource = new GroupChatDataSource();
-        groupChatDataSource.registerListener(this);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.group_chat_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -72,10 +72,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
             public void onClick(View ignored) {
                 if (username == null || username.equals("")) {
                     initUsername();
-                }
-
-                if (username == null || username.equals("")) {
-                    showInputDialog();
+                    return;
                 }
 
                 String text = editText.getText().toString();
@@ -96,6 +93,8 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
     private void initUsername() {
         if (username == null) {
             username = Utils.readUsernameFromPreferences(getContext());
+            if (chatAdapter != null)
+                chatAdapter.setUsername(username);
         }
     }
 
@@ -171,7 +170,5 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
 
     public void usernameUpdated() {
         initUsername();
-        chatAdapter.setUsername(username);
-        chatAdapter.notifyDataSetChanged();
     }
 }
