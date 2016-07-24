@@ -41,6 +41,6 @@ public class Utils {
                 context.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString(Constants.USERNAME_KEY, username);
-        edit.apply();
+        edit.commit();
     }
 }

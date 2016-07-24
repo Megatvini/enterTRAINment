@@ -75,10 +75,7 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
             public void onClick(View ignored) {
                 if (username == null || username.equals("")) {
                     initUsername();
-                }
-
-                if (username == null || username.equals("")) {
-                    showInputDialog();
+                    return;
                 }
 
                 String text = editText.getText().toString();
@@ -137,6 +134,8 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
     private void initUsername() {
         if (username == null) {
             username = Utils.readUsernameFromPreferences(getContext());
+            if (chatAdapter != null)
+                chatAdapter.setUsername(username);
         }
     }
 
@@ -182,7 +181,5 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
 
     public void usernameUpdated() {
         initUsername();
-        chatAdapter.setUsername(username);
-        chatAdapter.notifyDataSetChanged();
     }
 }
