@@ -9,4 +9,12 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="music">music</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="time">TIME</string>
+    <string name="estimated_time">ESTIMATED TIME</string>
+    <string name="current_weather">CURRENT WEATHER</string>
+    <string name="distance">DISTANCE</string>
+    <string name="set_alarm">set alarm</string>
+    <string name="temperature">0 ℃</string>
+    <string name="weather_status">weather status</string>
+    <string name="weather_info">weather_info</string>
 </resources>
