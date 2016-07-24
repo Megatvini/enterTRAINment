@@ -36,6 +36,7 @@ public class SharedMusicFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        updateUI();
         initAdapterAndProvider();
 
     }
@@ -67,8 +68,6 @@ public class SharedMusicFragment extends Fragment {
 
 
         final ImageButton playButton = (ImageButton) parentView.findViewById(R.id.play_button);
-        final String realRadio = "http://uk1-pn.webcast-server.net:8698/";
-
         final String local1 = HOST + "/song";
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,12 +80,14 @@ public class SharedMusicFragment extends Fragment {
                 }
             }
         });
+        updateUI();
         return parentView;
     }
 
 
     @Override
     public void onAttach(Context context) {
+        updateUI();
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
@@ -102,6 +103,7 @@ public class SharedMusicFragment extends Fragment {
         statusIntentFilter.addAction(PlayerService.UPDATE_PLAYING_KEY);
         getActivity().registerReceiver(this.updateStatusBroadcastReceiver, statusIntentFilter);
         initAdapterAndProvider();
+        updateUI();
         super.onResume();
     }
 
@@ -132,6 +134,9 @@ public class SharedMusicFragment extends Fragment {
 
     protected void updateUI() {
         final ImageButton playButton = (ImageButton) getActivity().findViewById(R.id.play_button);
+        if (playButton == null){
+            return;
+        }
         MainApplication application = (MainApplication) getActivity().getApplication();
         if (application.isPlaying()){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

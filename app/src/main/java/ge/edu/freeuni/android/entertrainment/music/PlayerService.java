@@ -74,8 +74,10 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
         }
         mainApplication.getWifiLock().acquire();
         try {
+            mediaPlayer.reset();
             mediaPlayer.setDataSource(path);
             System.out.println(path);
+
             mediaPlayer.prepareAsync();
             System.out.println("prepare called");
         } catch (IOException e) {
