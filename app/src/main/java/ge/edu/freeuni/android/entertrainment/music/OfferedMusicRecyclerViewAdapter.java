@@ -8,21 +8,16 @@ import android.widget.TextView;
 
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment.OnListFragmentInteractionListener;
-import ge.edu.freeuni.android.entertrainment.music.dummy.Song.DummyItem;
+import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class OfferMusicRecyclerViewAdapter extends RecyclerView.Adapter<OfferMusicRecyclerViewAdapter.ViewHolder> {
+public class OfferedMusicRecyclerViewAdapter extends RecyclerView.Adapter<OfferedMusicRecyclerViewAdapter.ViewHolder> implements MusicAdapter {
 
-    private final List<DummyItem> mValues;
+    private List<Song> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public OfferMusicRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public OfferedMusicRecyclerViewAdapter(List<Song> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -38,7 +33,7 @@ public class OfferMusicRecyclerViewAdapter extends RecyclerView.Adapter<OfferMus
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,11 +52,16 @@ public class OfferMusicRecyclerViewAdapter extends RecyclerView.Adapter<OfferMus
         return mValues.size();
     }
 
+    @Override
+    public void setData(List<Song> songs) {
+        this.mValues = songs;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Song mItem;
 
         public ViewHolder(View view) {
             super(view);

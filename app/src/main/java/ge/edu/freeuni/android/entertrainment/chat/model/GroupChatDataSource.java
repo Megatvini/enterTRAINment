@@ -3,12 +3,8 @@ package ge.edu.freeuni.android.entertrainment.chat.model;
 import android.util.Log;
 
 import com.koushikdutta.async.callback.CompletedCallback;
-import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.WebSocket;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import ge.edu.freeuni.android.entertrainment.chat.Constants;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
@@ -16,12 +12,10 @@ import ge.edu.freeuni.android.entertrainment.chat.Utils;
 /**
  * Created by Nika Doghonadze.
  */
-public class GroupChatDataSource {
-    private Set<ChatUpdateListener> listeners;
-    Future<WebSocket> webSocketFuture;
+public class GroupChatDataSource extends ChatDataSource{
 
     public GroupChatDataSource() {
-        listeners = new HashSet<>();
+        super();
         initWebsocketConnection();
     }
 
@@ -41,7 +35,11 @@ public class GroupChatDataSource {
                         Utils.runInMain(new Runnable() {
                             @Override
                             public void run() {
-                                notifyListeners(s);
+                                if (!s.equals("no data")) {
+                                    notifyListeners(s);
+                                } else {
+                                    notifyListeners();
+                                }
                             }
                         });
                     }
@@ -53,44 +51,10 @@ public class GroupChatDataSource {
                         if (ex != null)
                             ex.printStackTrace();
                         Log.d("Websocket", "has closed");
+                        notifyListenersConnectionClosed();
                     }
                 });
             }
         });
-    }
-
-    private void notifyListeners(String s) {
-        ChatEntry chatEntry = ChatEntry.fromJson(s);
-        for (ChatUpdateListener listener : listeners) {
-            listener.messageReceived(chatEntry);
-        }
-    }
-
-    public void registerListener(ChatUpdateListener listener) {
-        listeners.add(listener);
-    }
-
-    public void removeListener(ChatUpdateListener listener) {
-        listeners.remove(listener);
-    }
-
-    public void clearListeners() {
-        listeners.clear();
-    }
-
-    public void sendMessage(ChatEntry entry) {
-        WebSocket webSocket = webSocketFuture.tryGet();
-        if (webSocket != null) {
-            webSocket.send(entry.toString());
-        } else {
-            Log.d("WebSocket", "is null");
-        }
-    }
-
-
-    public void closeConnection() {
-        WebSocket webSocket = webSocketFuture.tryGet();
-        if (webSocket != null)
-            webSocket.close();
     }
 }

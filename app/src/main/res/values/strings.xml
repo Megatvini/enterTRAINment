@@ -17,4 +17,12 @@
     <string name="temperature">0 ℃</string>
     <string name="weather_status">weather status</string>
     <string name="weather_info">weather_info</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="song_image">song image</string>
+    <string name="upvote">upvote</string>
+    <string name="play">play</string>
+    <string name="random_chat_find_pair_btn_text">find pair</string>
+    <string name="android_chat_message_hint">Write a text</string>
 </resources>

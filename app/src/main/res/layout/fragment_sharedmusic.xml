@@ -1,20 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:elevation="10dp"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:gravity="center|center_horizontal"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_weight="8"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:weightSum="4"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/song_image"
+                android:layout_weight="1"
+                tools:src="@drawable/ic_menu_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/song_image" />
+            <TextView
+                android:id="@+id/song_name"
+                android:layout_weight="3"
+                tools:text="song name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        <RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                tools:src="@android:drawable/arrow_up_float"
+                android:id="@+id/upvote"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/upvote" />
+            <TextView
+                android:id="@+id/song_rating"
+                android:layout_below="@id/upvote"
+                tools:text="likes"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageButton
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/song_rating"
+                tools:src="@android:drawable/arrow_down_float"
+                android:id="@+id/downvote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/upvote" />
+        </RelativeLayout>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
-</LinearLayout>
+
+</android.support.v7.widget.CardView>

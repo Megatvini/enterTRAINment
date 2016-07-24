@@ -4,25 +4,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment.OnListFragmentInteractionListener;
-import ge.edu.freeuni.android.entertrainment.music.dummy.Song.DummyItem;
+import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedMusicRecyclerViewAdapter.ViewHolder> {
+public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedMusicRecyclerViewAdapter.ViewHolder> implements MusicAdapter{
 
-    private final List<DummyItem> mValues;
+    VoteListener voteListener;
+
+    private List<Song> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public SharedMusicRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public SharedMusicRecyclerViewAdapter(List<Song> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,43 +35,59 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.song = mValues.get(position);
+        holder.songName.setText(mValues.get(position).name);
+        holder.songRating.setText(mValues.get(position).rating+"");
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.upvote.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
+            public void onClick(View view) {
+                System.out.println("upvote clicked");
+                SharedMusicRecyclerViewAdapter.this.voteListener.upvote(holder.song.getId());
+            }
+        });
+        holder.downvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedMusicRecyclerViewAdapter.this.voteListener.downvote(holder.song.getId());
             }
         });
     }
 
     @Override
     public int getItemCount() {
+
         return mValues.size();
+    }
+
+    @Override
+    public void setData(List<Song> songs) {
+        this.mValues = songs;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final ImageView songImage;
+        public final TextView songName;
+        public final TextView songRating;
+        public final ImageButton upvote;
+        public final ImageButton downvote;
+        public Song song;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            songImage = (ImageView) view.findViewById(R.id.song_image);
+            songName = (TextView) view.findViewById(R.id.song_name);
+            songRating = (TextView) view.findViewById(R.id.song_rating);
+
+            downvote = (ImageButton)view.findViewById(R.id.downvote);
+            upvote = (ImageButton)view.findViewById(R.id.upvote);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
+    }
+
+    public void setVoteListener(VoteListener voteListener) {
+        this.voteListener = voteListener;
     }
 }

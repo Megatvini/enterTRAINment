@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.chat.Constants;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
-import ge.edu.freeuni.android.entertrainment.chat.adapters.GroupChatAdapter;
+import ge.edu.freeuni.android.entertrainment.chat.adapters.ChatAdapter;
+import ge.edu.freeuni.android.entertrainment.chat.helper.VerticalSpaceItemDecoration;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatEntry;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatUpdateListener;
 import ge.edu.freeuni.android.entertrainment.chat.model.GroupChatDataSource;
@@ -29,7 +32,7 @@ import ge.edu.freeuni.android.entertrainment.chat.model.GroupChatDataSource;
  * A simple {@link Fragment} subclass.
  */
 public class GroupChatFragment extends Fragment implements ChatUpdateListener{
-    private GroupChatAdapter groupChatAdapter;
+    private ChatAdapter chatAdapter;
     private String username;
     private GroupChatDataSource groupChatDataSource;
     private RecyclerView recyclerView;
@@ -48,18 +51,19 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_chat, container, false);
 
+        groupChatDataSource = new GroupChatDataSource();
+        groupChatDataSource.registerListener(this);
+
         initUsername();
 
         List<ChatEntry> chatEntryList = new ArrayList<>();
-        groupChatAdapter = new GroupChatAdapter(getContext(), chatEntryList);
-
-        groupChatDataSource = new GroupChatDataSource();
-        groupChatDataSource.registerListener(this);
+        chatAdapter = new ChatAdapter(getContext(), chatEntryList, username);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.group_chat_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(groupChatAdapter);
+        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(Constants.CHAT_ITEM_DIVIDER_HEIGHT));
+        recyclerView.setAdapter(chatAdapter);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.group_chat_btn_send_text);
         final EditText editText = (EditText) view.findViewById(R.id.group_chat_edit_text);
@@ -68,10 +72,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
             public void onClick(View ignored) {
                 if (username == null || username.equals("")) {
                     initUsername();
-                }
-
-                if (username == null || username.equals("")) {
-                    showInputDialog();
+                    return;
                 }
 
                 String text = editText.getText().toString();
@@ -92,6 +93,8 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
     private void initUsername() {
         if (username == null) {
             username = Utils.readUsernameFromPreferences(getContext());
+            if (chatAdapter != null)
+                chatAdapter.setUsername(username);
         }
     }
 
@@ -139,7 +142,33 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
     @Override
     public void messageReceived(ChatEntry chatEntry) {
         spinner.setVisibility(View.GONE);
-        groupChatAdapter.messageReceived(chatEntry);
-        recyclerView.smoothScrollToPosition(groupChatAdapter.getItemCount());
+        chatAdapter.messageReceived(chatEntry);
+        recyclerView.smoothScrollToPosition(chatAdapter.getItemCount());
+    }
+
+    @Override
+    public void noMessages() {
+        spinner.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void connectionClosed() {
+        Log.d("Websocket", "initializing chatdatasource");
+
+        groupChatDataSource.clearListeners();
+        groupChatDataSource.closeConnection();
+
+        groupChatDataSource = new GroupChatDataSource();
+        groupChatDataSource.registerListener(this);
+    }
+
+    @Override
+    public void connectionFound() {
+
+    }
+
+
+    public void usernameUpdated() {
+        initUsername();
     }
 }

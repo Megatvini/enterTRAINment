@@ -3,7 +3,6 @@ package ge.edu.freeuni.android.entertrainment.music;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,64 +10,41 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ge.edu.freeuni.android.entertrainment.R;
-import ge.edu.freeuni.android.entertrainment.music.dummy.Song;
-import ge.edu.freeuni.android.entertrainment.music.dummy.Song.DummyItem;
+import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
+import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class OfferedMusicsFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private static final String PATH = SharedMusicFragment.HOST+"/webapi/songs/offered";
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+    private OnListFragmentInteractionListener mListener;
+    private MusicProvider musicProvider;
+    private OfferedMusicRecyclerViewAdapter adapter;
+
+
     public OfferedMusicsFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static OfferedMusicsFragment newInstance(int columnCount) {
-        OfferedMusicsFragment fragment = new OfferedMusicsFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initAdapterAndProvider();
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        initAdapterAndProvider();
         View view = inflater.inflate(R.layout.offered_music_fragment_item_list, container, false);
 
-        // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new OfferMusicRecyclerViewAdapter(Song.ITEMS, mListener));
+            recyclerView.setAdapter(new OfferedMusicRecyclerViewAdapter(musicProvider.getSongs(), mListener));
         }
         return view;
     }
@@ -91,18 +67,21 @@ public class OfferedMusicsFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onResume() {
+        initAdapterAndProvider();
+        super.onResume();
+    }
+
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Song item);
+    }
+
+    private void initAdapterAndProvider() {
+
+        musicProvider = new MusicProvider(getContext(),PATH);
+        adapter = new OfferedMusicRecyclerViewAdapter(musicProvider.getSongs(), mListener);
+        musicProvider.setOfferedAdapter(adapter);
+        musicProvider.loadData();
     }
 }

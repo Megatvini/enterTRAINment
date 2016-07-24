@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import ge.edu.freeuni.android.entertrainment.R;
 
-public class MusicFragment extends Fragment {
+public class MusicFragment extends Fragment{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -46,7 +46,7 @@ public class MusicFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
 
         View view = inflater.inflate(R.layout.activity_music, container, false);
         // Set up the ViewPager with the sections adapter.
@@ -89,9 +89,9 @@ public class MusicFragment extends Fragment {
         public Fragment getItem(int position) {
             if (position == 0){
 
-                return OfferedMusicsFragment.newInstance(1);
+                return new OfferedMusicsFragment();
             }else {
-                return SharedMusicFragment.newInstance(1);
+                return new SharedMusicFragment();
             }
         }
 
