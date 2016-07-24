@@ -179,4 +179,10 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
         randomChatDataSource.clearListeners();
         randomChatDataSource.closeConnection();
     }
+
+    public void usernameUpdated() {
+        initUsername();
+        chatAdapter.setUsername(username);
+        chatAdapter.notifyDataSetChanged();
+    }
 }

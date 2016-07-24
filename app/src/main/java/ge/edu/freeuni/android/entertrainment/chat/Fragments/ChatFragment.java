@@ -30,6 +30,8 @@ public class ChatFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private View view;
+    private GroupChatFragment groupChatFragment;
+    private IndividualChatFragment individualChatFragment;
     private OnFragmentInteractionListener mListener;
 
     public ChatFragment() {
@@ -52,8 +54,12 @@ public class ChatFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFrag(new GroupChatFragment(), "Group Chat");
-        adapter.addFrag(new IndividualChatFragment(), "Individual Chat");
+
+        groupChatFragment = new GroupChatFragment();
+        individualChatFragment = new IndividualChatFragment();
+
+        adapter.addFrag(groupChatFragment, "Group Chat");
+        adapter.addFrag(individualChatFragment, "Individual Chat");
         viewPager.setAdapter(adapter);
     }
 
@@ -133,6 +139,8 @@ public class ChatFragment extends Fragment {
                         @Override
                         public void run() {
                             Utils.saveUsernameInSharedPreferences(getContext(), response);
+                            groupChatFragment.usernameUpdated();
+                            individualChatFragment.usernameUpdated();
                         }
                     });
                 }

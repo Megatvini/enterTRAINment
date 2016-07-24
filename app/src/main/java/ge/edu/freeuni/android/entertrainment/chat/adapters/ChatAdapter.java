@@ -22,6 +22,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private Context context;
     private String myUsername;
     private List<ChatEntry> chatEntryList;
+    private String username;
 
     public ChatAdapter(Context context, List<ChatEntry> chatEntryList, String myUsername) {
         this.context = context;
@@ -96,6 +97,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public void clearEntries() {
         chatEntryList.clear();
         notifyDataSetChanged();
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

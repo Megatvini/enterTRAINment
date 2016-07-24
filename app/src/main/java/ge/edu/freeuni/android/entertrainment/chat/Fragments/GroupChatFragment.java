@@ -167,4 +167,11 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
     public void connectionFound() {
 
     }
+
+
+    public void usernameUpdated() {
+        initUsername();
+        chatAdapter.setUsername(username);
+        chatAdapter.notifyDataSetChanged();
+    }
 }
