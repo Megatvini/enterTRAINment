@@ -9,7 +9,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/medium_padding"
         android:background="@color/lightGray">
         <TextView
             android:id="@+id/group_chat_item_username"
