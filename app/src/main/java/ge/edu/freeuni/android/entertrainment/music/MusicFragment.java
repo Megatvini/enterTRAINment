@@ -89,9 +89,9 @@ public class MusicFragment extends Fragment{
         public Fragment getItem(int position) {
             if (position == 0){
 
-                return OfferedMusicsFragment.newInstance(1);
+                return new OfferedMusicsFragment();
             }else {
-                return SharedMusicFragment.newInstance(1);
+                return new SharedMusicFragment();
             }
         }
 

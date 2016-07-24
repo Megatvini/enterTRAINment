@@ -47,7 +47,6 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_START);
         intent.putExtra(PATH_KEY,path);
-        System.out.println("starting service");
         context.startService(intent);
     }
 

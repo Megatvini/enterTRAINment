@@ -8,18 +8,13 @@ import android.widget.TextView;
 
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment.OnListFragmentInteractionListener;
-import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider.Song;
+import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link Song} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class OfferedMusicRecyclerViewAdapter extends RecyclerView.Adapter<OfferedMusicRecyclerViewAdapter.ViewHolder> {
+public class OfferedMusicRecyclerViewAdapter extends RecyclerView.Adapter<OfferedMusicRecyclerViewAdapter.ViewHolder> implements MusicAdapter {
 
-    private final List<Song> mValues;
+    private List<Song> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public OfferedMusicRecyclerViewAdapter(List<Song> items, OnListFragmentInteractionListener listener) {
@@ -55,6 +50,11 @@ public class OfferedMusicRecyclerViewAdapter extends RecyclerView.Adapter<Offere
     @Override
     public int getItemCount() {
         return mValues.size();
+    }
+
+    @Override
+    public void setData(List<Song> songs) {
+        this.mValues = songs;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

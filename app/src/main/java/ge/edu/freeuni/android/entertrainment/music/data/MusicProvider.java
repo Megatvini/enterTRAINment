@@ -1,54 +1,69 @@
 package ge.edu.freeuni.android.entertrainment.music.data;
 
+import android.content.Context;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class MusicProvider {
+import ge.edu.freeuni.android.entertrainment.music.OfferedMusicRecyclerViewAdapter;
+import ge.edu.freeuni.android.entertrainment.music.SharedMusicRecyclerViewAdapter;
+import ge.edu.freeuni.android.entertrainment.music.VoteListener;
 
-    public static final List<Song> ITEMS = new ArrayList<Song>();
+public class MusicProvider implements  VoteListener {
+
+    private PlaylistClient playlistClient;
+    private String path;
+
+    private SharedMusicRecyclerViewAdapter sharedAdapter;
+    private OfferedMusicRecyclerViewAdapter offeredAdapter;
+
+    private List<Song> songs = new ArrayList<>();
+
+    public MusicProvider(Context context, String path){
+        this.path = path;
+        playlistClient = new PlaylistClient(this);
+    }
 
 
-    public static final Map<String, Song> ITEM_MAP = new HashMap<String, Song>();
+    public void loadData(){
+        playlistClient.loadPlaylist(path);
+    }
 
-    private static final int COUNT = 25;
+    public void setSharedAdapter(SharedMusicRecyclerViewAdapter adapter) {
+        this.sharedAdapter = adapter;
+    }
 
-    static {
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
+    public void setOfferedAdapter(OfferedMusicRecyclerViewAdapter offeredAdapter) {
+        this.offeredAdapter = offeredAdapter;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+
+
+    @Override
+    public void upvote(String id) {
+        this.playlistClient.upvote(path+"/"+id+"/upvote");
+    }
+
+    @Override
+    public void downvote(String id) {
+        this.playlistClient.downvote(id,path);
+    }
+
+
+    public void onNewPlayListData(List<Song> songs){
+        if(this.sharedAdapter != null) {
+            this.sharedAdapter.setData(songs);
+            sharedAdapter.notifyDataSetChanged();
+        }
+        if(this.offeredAdapter != null) {
+            this.offeredAdapter.setData(songs);
+            offeredAdapter.notifyDataSetChanged();
         }
     }
 
-    private static void addItem(Song item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
-    }
 
-    private static Song createDummyItem(int position) {
-        return new Song(position+"",position+"",0,"");
-    }
-
-    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
-    }
-
-    public static class Song {
-        public final String id;
-        public final String name;
-        public final int rating;
-        public final String image;
-
-        public Song(String id, String name, int rating, String image) {
-            this.id = id;
-            this.name = name;
-            this.rating = rating;
-            this.image = image;
-        }
-    }
 }
