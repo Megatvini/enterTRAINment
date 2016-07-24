@@ -1,6 +1,8 @@
 package ge.edu.freeuni.android.entertrainment.music.data;
 
 
+import android.support.annotation.NonNull;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -12,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+
+import static ge.edu.freeuni.android.entertrainment.chat.Utils.getSongsFromJsonArray;
 
 public class PlaylistClient {
 
@@ -46,22 +50,9 @@ public class PlaylistClient {
     }
 
     private void handleNewPlaylistData(JSONArray response) {
-        int length = response.length();
-        if (length >=1) {
-            List<Song> songList = new ArrayList<>();
-            for (int i = 0; i < length; i++) {
-                try {
-                    JSONObject musicJson = (JSONObject) response.get(i);
-                    Song song = new Song(musicJson.getString("voted"),musicJson.getString("id"), musicJson.getString("name"), musicJson.getInt("rating"), musicJson.getString("imagePath"));
-                    System.out.println(song.getRating());
-                    songList.add(song);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+        List<Song> songList = getSongsFromJsonArray(response);
+        if(songList.size() != 0)
             PlaylistClient.this.musicProvider.onNewPlayListData(songList);
-
-        }
     }
 
     public void downvote(String id, String downvote){

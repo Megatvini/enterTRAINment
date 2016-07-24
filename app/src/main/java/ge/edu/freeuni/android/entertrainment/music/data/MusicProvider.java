@@ -57,11 +57,10 @@ public class MusicProvider implements  VoteListener {
     public void onNewPlayListData(List<Song> songs){
         if(this.sharedAdapter != null) {
             this.sharedAdapter.setData(songs);
-            sharedAdapter.notifyDataSetChanged();
+            this.sharedAdapter.notifyDataSetChanged();
         }
         if(this.offeredAdapter != null) {
             this.offeredAdapter.setData(songs);
-            offeredAdapter.notifyDataSetChanged();
         }
     }
 

@@ -8,4 +8,5 @@ public interface ChatUpdateListener {
     void noMessages();
     void connectionClosed();
     void connectionFound();
+
 }

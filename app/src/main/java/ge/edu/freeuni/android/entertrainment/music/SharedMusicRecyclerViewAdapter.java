@@ -8,15 +8,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment.OnListFragmentInteractionListener;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
-import java.util.List;
+public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedMusicRecyclerViewAdapter.ViewHolder>{
 
-public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedMusicRecyclerViewAdapter.ViewHolder> implements MusicAdapter{
-
-    VoteListener voteListener;
+    private VoteListener voteListener;
 
     private List<Song> mValues;
     private final OnListFragmentInteractionListener mListener;
@@ -24,6 +24,7 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
     public SharedMusicRecyclerViewAdapter(List<Song> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+
     }
 
     @Override
@@ -35,6 +36,7 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        System.out.println("re layouting");
         holder.song = mValues.get(position);
         holder.songName.setText(mValues.get(position).name);
         holder.songRating.setText(mValues.get(position).rating+"");
@@ -57,13 +59,24 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
     @Override
     public int getItemCount() {
 
-        return mValues.size();
+        int size = mValues.size();
+        System.out.println("size: "+size);
+        return size;
     }
 
-    @Override
     public void setData(List<Song> songs) {
-        this.mValues = songs;
+        System.out.println("l1:"+songs.size());
+        this.mValues.clear();
+        this.mValues.addAll(songs);
+        System.out.println("l2:"+mValues.size());
+//        notifyDataSetChanged();
+
+//        notifyItemInserted(mValues.size());
+
+
+
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
