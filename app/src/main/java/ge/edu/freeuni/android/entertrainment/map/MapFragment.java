@@ -2,15 +2,19 @@ package ge.edu.freeuni.android.entertrainment.map;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,6 +43,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private GoogleMap mMap;
     private Handler handler = new Handler();
     private Marker trainMarker;
+    private TextView nextStation;
 
     private Runnable runTrain = new Runnable() {
         @Override
@@ -51,11 +56,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     updateTrainLocation(response);
+                    updateStation(response);
                 }
             });
-            handler.postDelayed(runTrain, 2000);
+            handler.postDelayed(runTrain, 10000);
         }
     };
+
+    private void updateStation(JSONObject response) {
+        try {
+            String station = response.getString("next_station");
+            nextStation.setText(station);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void updateTrainLocation(JSONObject response) {
         try {
@@ -85,6 +100,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        nextStation = (TextView) view.findViewById(R.id.next_station);
 
         return view;
     }
@@ -93,7 +109,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         drawMarkers();
-        drawPolylines();
         mMap.setOnMarkerClickListener(this);
 
         LatLng tbilisi = new LatLng(41.7, 44.8);
@@ -107,9 +122,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         googleMap.moveCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
-    }
-
-    private void drawPolylines() {
     }
 
     private String[] cities = {"Rustavi", "Tbilisi","Gori", "Khashuri", "Zestafoni", "Kutaisi", "Samtredia", "Poti", "Kobuleti", "Batumi"};
@@ -148,10 +160,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     private void addMarker(LatLng coord, String city) {
+
+        int height = 100;
+        int width = 60;
+        BitmapDrawable bitmapdraw=(BitmapDrawable) ResourcesCompat.getDrawable(getResources(), R.drawable.station_pointer, null);;
+        Bitmap b = bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
         MarkerOptions marker = new MarkerOptions()
                 .position(coord)
                 .title(city)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
         mMap.addMarker(marker);
     }
 
