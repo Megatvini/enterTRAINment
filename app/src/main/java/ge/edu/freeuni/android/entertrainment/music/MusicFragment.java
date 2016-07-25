@@ -25,11 +25,6 @@ public class MusicFragment extends Fragment{
     @Override
      public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-
-
-
 
     }
 
@@ -52,9 +47,7 @@ public class MusicFragment extends Fragment{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -66,10 +59,6 @@ public class MusicFragment extends Fragment{
     }
 
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -88,7 +77,6 @@ public class MusicFragment extends Fragment{
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 
@@ -96,9 +84,9 @@ public class MusicFragment extends Fragment{
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "OFFERED";
                 case 1:
-                    return "SECTION 2";
+                    return "SHARED";
             }
             return null;
         }

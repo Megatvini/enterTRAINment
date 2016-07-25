@@ -12,4 +12,5 @@ public interface Constants {
     String PAIR_FOUND_CODE = "0b83465e-000b-4361-901f-e83840c6a29f";
     String HOST = "http://entertrainment.herokuapp.com";
     String HOST_IP = "entertrainment.herokuapp.com";
+    String READING_PAGE_KEY = "READING_PAGE_KEY";
 }

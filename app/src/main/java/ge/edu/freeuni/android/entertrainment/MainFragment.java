@@ -62,6 +62,15 @@ public class MainFragment extends Fragment {
             }
         });
 
+        CardView moviesButton = (CardView) view.findViewById(R.id.movies_button);
+        moviesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.onNavigationItemSelected(navMenu.findItem(R.id.nav_movie));
+            }
+        });
+
+
         return view;
     }
 

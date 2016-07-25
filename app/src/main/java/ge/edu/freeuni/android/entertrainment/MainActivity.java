@@ -30,6 +30,7 @@ import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.map.MapFragment;
 import ge.edu.freeuni.android.entertrainment.map.NotificationGenerator;
+import ge.edu.freeuni.android.entertrainment.movie.MovieFragment;
 import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
@@ -39,7 +40,7 @@ import ge.edu.freeuni.android.entertrainment.reading.ReadingActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChatFragment.OnFragmentInteractionListener,
-        SharedMusicFragment.OnListFragmentInteractionListener,OfferedMusicsFragment.OnListFragmentInteractionListener {
+        SharedMusicFragment.OnListFragmentInteractionListener {
 
     public NavigationView navigationView;
     private DrawerLayout drawer;
@@ -150,7 +151,11 @@ public class MainActivity extends AppCompatActivity
             replaceFragmentContainer(new BookQRFragment());
         } else if (id == R.id.nav_map) {
             replaceFragmentContainer(new MapFragment());
-        } else if (id == R.id.nav_share) {
+        }
+        else if(id == R.id.nav_movie){
+            replaceFragmentContainer(new MovieFragment());
+        }
+        else if (id == R.id.nav_share) {
             return false;
         } else if (id == R.id.nav_send) {
             return false;
