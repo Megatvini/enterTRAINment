@@ -16,9 +16,10 @@
         <ImageButton
             android:layout_centerHorizontal="true"
             android:id="@+id/play_button"
+            android:backgroundTint="@color/colorAccent"
             android:background="@drawable/ic_play_arrow_black_24dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:contentDescription="@string/play" />
     </RelativeLayout>
 
