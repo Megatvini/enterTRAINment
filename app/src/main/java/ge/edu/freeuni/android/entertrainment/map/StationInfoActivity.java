@@ -145,6 +145,12 @@ public class StationInfoActivity extends SlidingActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        handler.removeCallbacks(updateInfo);
+        super.onDestroy();
+    }
+
     private static int toCelsius(int kelvin) {
         return kelvin - 273;
     }

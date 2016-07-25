@@ -38,6 +38,14 @@ public class MainFragment extends Fragment {
         final MainActivity mainActivity = (MainActivity) getActivity();
         final Menu navMenu = mainActivity.navigationView.getMenu();
 
+        CardView readButton = (CardView) view.findViewById(R.id.read_button);
+        readButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.onNavigationItemSelected(navMenu.findItem(R.id.nav_reading));
+            }
+        });
+
         CardView musicButton = (CardView) view.findViewById(R.id.music_button);
         musicButton.setOnClickListener(new View.OnClickListener() {
             @Override

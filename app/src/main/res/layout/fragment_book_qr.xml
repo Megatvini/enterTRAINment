@@ -8,7 +8,19 @@
         android:id="@+id/scan_barcode_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/scan_qrcode"/>
+        android:layout_marginTop="45dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/qr_code"
+        android:background="@drawable/qr_code_background"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan your code"
+        android:layout_below="@+id/scan_barcode_image"
+        android:textColor="@color/colorPrimary"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"/>
 
 </RelativeLayout>

@@ -23,6 +23,6 @@
     <dimen name="main_fragment_btn_ic_width">30dp</dimen>
     <dimen name="main_fragment_btn_ic_height">30dp</dimen>
     <dimen name="main_fragment_btn_ic_margin">20dp</dimen>
-    <dimen name="main_fragment_btn_height">65dp</dimen>
+    <dimen name="main_fragment_btn_height">60dp</dimen>
     <dimen name="main_fragment_btn_margin">3dp</dimen>
 </resources>

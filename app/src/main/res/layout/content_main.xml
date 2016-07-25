@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/read_btn"
+            android:id="@+id/read_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/main_fragment_btn_height"
             android:clickable="true"
