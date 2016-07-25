@@ -16,7 +16,7 @@
     <LinearLayout
         android:id="@+id/group_input_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:padding="5dp"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"

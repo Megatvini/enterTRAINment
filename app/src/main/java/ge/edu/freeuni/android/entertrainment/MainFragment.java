@@ -3,11 +3,11 @@ package ge.edu.freeuni.android.entertrainment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 public class MainFragment extends Fragment {
 
@@ -38,7 +38,7 @@ public class MainFragment extends Fragment {
         final MainActivity mainActivity = (MainActivity) getActivity();
         final Menu navMenu = mainActivity.navigationView.getMenu();
 
-        Button musicButton = (Button) view.findViewById(R.id.music_button);
+        CardView musicButton = (CardView) view.findViewById(R.id.music_button);
         musicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +46,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-        Button chatButton = (Button) view.findViewById(R.id.chat_button);
+        CardView chatButton = (CardView) view.findViewById(R.id.chat_button);
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +54,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-        Button mapButton = (Button) view.findViewById(R.id.map_button);
+        CardView mapButton = (CardView) view.findViewById(R.id.map_button);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -23,6 +23,10 @@
     <string name="song_image">song image</string>
     <string name="upvote">upvote</string>
     <string name="play">play</string>
-    <string name="random_chat_find_pair_btn_text">find pair</string>
+    <string name="random_chat_find_pair_btn_text">FIND PAIR</string>
     <string name="android_chat_message_hint">Write a text</string>
+    <string name="next_station">NEXT STATION</string>
+    <string name="station">STATION</string>
+    <string name="chat">chat</string>
+    <string name="map">map</string>
 </resources>
