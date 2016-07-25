@@ -1,5 +1,6 @@
 package ge.edu.freeuni.android.entertrainment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.map.MapFragment;
@@ -21,6 +26,7 @@ import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 import ge.edu.freeuni.android.entertrainment.reading.BookQRFragment;
+import ge.edu.freeuni.android.entertrainment.reading.ReadingActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChatFragment.OnFragmentInteractionListener,
@@ -135,5 +141,27 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Song song) {
 
+    }
+
+    // Get the results:
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                startReadingActivity(result.getContents());
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
+    private void startReadingActivity(String url) {
+        Intent i = new Intent(MainActivity.this, ReadingActivity.class);
+        i.putExtra("url", url);
+        startActivity(i);
     }
 }

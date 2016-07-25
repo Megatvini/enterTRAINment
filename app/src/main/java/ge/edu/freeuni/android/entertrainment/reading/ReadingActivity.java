@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
@@ -18,10 +19,9 @@ import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 public class ReadingActivity extends AppCompatActivity implements DownloadFile.Listener {
     private String bookUrl;
-    private String bookName;
     private PDFView pdfView;
-    private File file;
     private ProgressBar spinner;
+    private String filePath;
 
 
     @Override
@@ -31,13 +31,11 @@ public class ReadingActivity extends AppCompatActivity implements DownloadFile.L
 
         Intent intent = getIntent();
         bookUrl = intent.getExtras().getString("url");
-        bookName = intent.getExtras().getString("bookName");
-
-
-        new RemotePDFViewPager(this, bookUrl, this);
 
         pdfView = (PDFView) findViewById(R.id.pdfView);
         spinner = (ProgressBar) findViewById(R.id.book_loading_progress_bar);
+
+        new RemotePDFViewPager(this, bookUrl, this);
     }
 
     @Override
@@ -49,7 +47,9 @@ public class ReadingActivity extends AppCompatActivity implements DownloadFile.L
             }
         };
 
-        file = new File(destinationPath);
+        filePath = destinationPath;
+        File file = new File(destinationPath);
+        file.deleteOnExit();
 
         pdfView.fromFile(file)
                 .enableSwipe(true)
@@ -71,7 +71,8 @@ public class ReadingActivity extends AppCompatActivity implements DownloadFile.L
 
     @Override
     public void onFailure(Exception e) {
-
+        Toast.makeText(ReadingActivity.this, "Page Load failed", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
@@ -83,5 +84,13 @@ public class ReadingActivity extends AppCompatActivity implements DownloadFile.L
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (filePath != null) {
+            onSuccess(bookUrl, filePath);
+        }
     }
 }
