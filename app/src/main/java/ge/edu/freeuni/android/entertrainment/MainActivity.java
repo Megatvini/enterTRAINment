@@ -1,5 +1,6 @@
 package ge.edu.freeuni.android.entertrainment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -21,6 +22,8 @@ import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 import ge.edu.freeuni.android.entertrainment.reading.ReadingFragment;
+
+import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChatFragment.OnFragmentInteractionListener,
@@ -135,6 +138,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Song song) {
+        String uriString = HOST + "/webapi/mediastream/audio/" + song.getId();
+        System.out.println(uriString);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.parse(uriString), "audio/mp3");
+        startActivity(intent);
 
+//        Player.start(this,uriString);
     }
 }

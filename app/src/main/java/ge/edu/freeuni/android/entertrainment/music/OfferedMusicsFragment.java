@@ -14,6 +14,7 @@ import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
 import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
+import static ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment.PLAYLIST_ENDPOINT;
 
 public class OfferedMusicsFragment extends Fragment {
 
@@ -39,15 +40,14 @@ public class OfferedMusicsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        initAdapterAndProvider();
         View view = inflater.inflate(R.layout.offered_music_fragment_item_list, container, false);
-
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new OfferedMusicRecyclerViewAdapter(musicProvider.getSongs(), mListener));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.setAdapter(adapter);
         }
+        initAdapterAndProvider();
         return view;
     }
 
@@ -80,9 +80,10 @@ public class OfferedMusicsFragment extends Fragment {
     }
 
     private void initAdapterAndProvider() {
-
-        musicProvider = new MusicProvider(getContext(),PATH);
-        adapter = new OfferedMusicRecyclerViewAdapter(musicProvider.getSongs(), mListener);
+        if (musicProvider == null)
+            musicProvider = new MusicProvider(getContext(),PATH);
+        if (adapter == null)
+            adapter = new OfferedMusicRecyclerViewAdapter(musicProvider.getSongs(), mListener);
         musicProvider.setOfferedAdapter(adapter);
         musicProvider.loadData();
     }

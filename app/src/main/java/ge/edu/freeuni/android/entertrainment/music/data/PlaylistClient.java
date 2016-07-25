@@ -59,6 +59,8 @@ public class PlaylistClient {
 
     private void handleNewPlaylistData(JSONArray response) {
         List<Song> songList = getSongsFromJsonArray(response);
+        if(songList.size() == 0 )
+            return;
         String voted = songList.get(0).getVoted();
         System.out.println("souted : "+ voted);
         if(songList.size() != 0)
