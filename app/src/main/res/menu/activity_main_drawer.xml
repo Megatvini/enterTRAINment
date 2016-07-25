@@ -3,6 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_reading"
+            android:icon="@drawable/ic_import_contacts_black_24dp"
+            android:title="Reading" />
+        <item
             android:id="@+id/nav_chat"
             android:icon="@drawable/ic_group_black_24dp"
             android:title="Chat" />
@@ -11,9 +15,9 @@
             android:icon="@drawable/ic_volume_up_black_24dp"
             android:title="Music" />
         <item
-            android:id="@+id/nav_reading"
-            android:icon="@drawable/ic_import_contacts_black_24dp"
-            android:title="Reading" />
+            android:id="@+id/nav_movie"
+            android:icon="@drawable/ic_local_movies_black_24dp"
+            android:title="Movie" />
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_public_black_24dp"
@@ -26,10 +30,6 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
         </menu>
     </item>
 

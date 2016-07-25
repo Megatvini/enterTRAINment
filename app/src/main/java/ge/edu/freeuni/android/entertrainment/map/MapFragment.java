@@ -100,7 +100,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        nextStation = (TextView) view.findViewById(R.id.next_station);
+        nextStation = (TextView) view.findViewById(R.id.station);
 
         return view;
     }
@@ -161,8 +161,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     private void addMarker(LatLng coord, String city) {
 
-        int height = 80;
-        int width = 160;
+        int height = 100;
+        int width = 200;
         BitmapDrawable bitmapdraw=(BitmapDrawable) ResourcesCompat.getDrawable(getResources(), R.drawable.station_pointer, null);;
         Bitmap b = bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);

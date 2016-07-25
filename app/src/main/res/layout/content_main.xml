@@ -22,14 +22,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/main_fragment_btn_height"
             android:clickable="true"
+            android:layout_margin="@dimen/main_fragment_btn_margin"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/colorPrimary"
             app:cardCornerRadius="6dp"
             app:cardElevation="1dp">
 
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="@dimen/main_fragment_btn_ic_width"
@@ -53,6 +54,7 @@
             android:id="@+id/chat_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/main_fragment_btn_height"
+            android:layout_margin="@dimen/main_fragment_btn_margin"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/colorPrimary"
@@ -60,8 +62,8 @@
             app:cardElevation="1dp">
 
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="@dimen/main_fragment_btn_ic_width"
@@ -84,14 +86,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/main_fragment_btn_height"
             android:clickable="true"
+            android:layout_margin="@dimen/main_fragment_btn_margin"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/colorPrimary"
             app:cardCornerRadius="6dp"
             app:cardElevation="1dp">
 
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="@dimen/main_fragment_btn_ic_width"
@@ -115,14 +118,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/main_fragment_btn_height"
             android:clickable="true"
+            android:layout_margin="@dimen/main_fragment_btn_margin"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/colorPrimary"
             app:cardCornerRadius="6dp"
             app:cardElevation="1dp">
 
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="@dimen/main_fragment_btn_ic_width"
@@ -146,14 +150,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/main_fragment_btn_height"
             android:clickable="true"
+            android:layout_margin="@dimen/main_fragment_btn_margin"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/colorPrimary"
             app:cardCornerRadius="6dp"
             app:cardElevation="1dp">
 
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="@dimen/main_fragment_btn_ic_width"
