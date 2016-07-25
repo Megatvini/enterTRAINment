@@ -44,6 +44,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content">
             <ImageButton
+                android:paddingBottom="-6dp"
+                android:layout_marginBottom="-6dp"
+                android:background="@color/zxing_transparent"
                 android:src="@drawable/ic_arrow_up_48px"
                 android:id="@+id/upvote"
                 android:layout_centerHorizontal="true"
@@ -59,6 +62,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <ImageButton
+                android:paddingTop="-6dp"
+                android:layout_marginTop="-6dp"
+                android:background="@color/zxing_transparent"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/song_rating"
                 android:src="@drawable/ic_arrow_down_48px"
