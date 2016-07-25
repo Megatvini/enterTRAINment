@@ -1,36 +1,48 @@
-<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ge.edu.freeuni.android.entertrainment.reading.ReadingFragment"
-    android:id="@+id/reading_view_flipper">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="ge.edu.freeuni.android.entertrainment.reading.ReadingFragment">
 
-    <TextView
+    <ViewFlipper
+        android:id="@+id/reading_view_flipper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/book_text_sample"
+            android:textColor="@color/colorBlack"
+            android:keepScreenOn="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="2"
+            android:textSize="100sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="3"
+            android:textSize="100sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="4"
+            android:textSize="100sp"/>
+    </ViewFlipper>
+
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="1"
-        android:textSize="100sp"/>
+        android:layout_height="match_parent"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="2"
-        android:textSize="100sp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="3"
-        android:textSize="100sp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="4"
-        android:textSize="100sp"/>
-
-</ViewFlipper>
+</RelativeLayout>

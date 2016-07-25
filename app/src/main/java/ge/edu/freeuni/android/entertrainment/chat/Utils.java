@@ -43,4 +43,22 @@ public class Utils {
         edit.putString(Constants.USERNAME_KEY, username);
         edit.commit();
     }
+
+    public static void saveReadingPage(Context context, String url, int page) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt(Constants.READING_PAGE_KEY + url, page);
+        edit.apply();
+    }
+
+
+    public static int readReadingPage(Context context, String url) {
+        if (context == null)
+            return 1;
+
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(Constants.READING_PAGE_KEY + url, 1);
+    }
 }

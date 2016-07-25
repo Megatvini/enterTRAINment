@@ -40,22 +40,33 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
         <activity
             android:name=".map.StationInfoActivity"
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/Theme.Sliding.Light" />
 
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".music.PlayerService" android:enabled="true">
 
+        <service
+            android:name=".music.PlayerService"
+            android:enabled="true">
         </service>
+
+        <activity
+            android:name=".reading.ReadingActivity"
+            android:theme="@style/AppFullScreenTheme">
+        </activity>
+
     </application>
 
 </manifest>

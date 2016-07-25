@@ -20,7 +20,7 @@ import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
-import ge.edu.freeuni.android.entertrainment.reading.ReadingFragment;
+import ge.edu.freeuni.android.entertrainment.reading.BookQRFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChatFragment.OnFragmentInteractionListener,
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_music) {
             replaceFragmentContainer(new MusicFragment());
         } else if (id == R.id.nav_reading) {
-            replaceFragmentContainer(new ReadingFragment());
+            replaceFragmentContainer(new BookQRFragment());
         } else if (id == R.id.nav_map) {
             replaceFragmentContainer(new MapFragment());
         } else if (id == R.id.nav_share) {

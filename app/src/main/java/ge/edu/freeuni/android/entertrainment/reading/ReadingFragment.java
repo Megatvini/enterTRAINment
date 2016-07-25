@@ -4,22 +4,35 @@ package ge.edu.freeuni.android.entertrainment.reading;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ViewFlipper;
 
+import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
+
+import java.io.File;
+
+import es.voghdev.pdfviewpager.library.RemotePDFViewPager;
+import es.voghdev.pdfviewpager.library.remote.DownloadFile;
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ReadingFragment extends Fragment {
-    private ViewFlipper viewFlipper;
-    private float lastX;
+public class ReadingFragment extends Fragment implements DownloadFile.Listener {
+    private PDFView pdfView;
+    private String bookName;
+    private String bookUrl;
 
-    private static int NUM_CHILDREN = 3;
-
+    public static ReadingFragment newInstance(String url, String bookName) {
+        ReadingFragment f = new ReadingFragment();
+        Bundle args = new Bundle();
+        args.putString("url", url);
+        args.putString("bookName", bookName);
+        f.setArguments(args);
+        return f;
+    }
 
     public ReadingFragment() {
         // Required empty public constructor
@@ -32,42 +45,50 @@ public class ReadingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_reading, container, false);
 
-        viewFlipper = (ViewFlipper) view.findViewById(R.id.reading_view_flipper);
-        viewFlipper.setDisplayedChild(0);
-        initTouchListener(view);
+        Bundle arguments = getArguments();
+        String bookUrl = arguments.getString("url");
+        assert bookUrl != null;
+        bookName = arguments.getString("bookName");
 
+        new RemotePDFViewPager(getContext(), bookUrl, this);
+
+        pdfView = (PDFView) view.findViewById(R.id.pdfView);
         return view;
     }
 
-    private void initTouchListener(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
+
+    @Override
+    public void onSuccess(final String url, String destinationPath) {
+        OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        lastX = motionEvent.getX();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        float currentX = motionEvent.getX();
-
-                        if (lastX < currentX) {
-                            viewFlipper.setInAnimation(getContext(), R.anim.in_from_left);
-                            viewFlipper.setOutAnimation(getContext(), R.anim.out_to_right);
-                            viewFlipper.showPrevious();
-                        }
-
-                        if (lastX > currentX) {
-                            viewFlipper.setInAnimation(getContext(), R.anim.in_from_right);
-                            viewFlipper.setOutAnimation(getContext(), R.anim.out_to_left);
-                            viewFlipper.showNext();
-                        }
-                        break;
-                    }
-                }
-                return true;
+            public void onPageChanged(int page, int pageCount) {
+                Utils.saveReadingPage(getContext(), url, page);
             }
-        });
+        };
+
+
+        pdfView.fromFile(new File(destinationPath))
+                .enableSwipe(true)
+                .enableDoubletap(true)
+                .swipeVertical(false)
+                .defaultPage(Utils.readReadingPage(getContext(), url))
+                .showMinimap(false)
+//                .onDraw(onDrawListener)
+//                .onLoad(onLoadCompleteListener)
+                .onPageChange(onPageChangeListener)
+//                .onError(onErrorListener)
+                .enableAnnotationRendering(false)
+                .password(null)
+                .load();
     }
 
+    @Override
+    public void onFailure(Exception e) {
+
+    }
+
+    @Override
+    public void onProgressUpdate(int progress, int total) {
+
+    }
 }
