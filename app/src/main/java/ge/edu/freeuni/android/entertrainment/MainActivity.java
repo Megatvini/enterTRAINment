@@ -1,8 +1,11 @@
 package ge.edu.freeuni.android.entertrainment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,35 +15,76 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.map.MapFragment;
-import ge.edu.freeuni.android.entertrainment.movie.MovieFragment;
+import ge.edu.freeuni.android.entertrainment.map.NotificationGenerator;
 import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
-import ge.edu.freeuni.android.entertrainment.reading.ReadingFragment;
-
-import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
+import ge.edu.freeuni.android.entertrainment.reading.BookQRFragment;
+import ge.edu.freeuni.android.entertrainment.reading.ReadingActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChatFragment.OnFragmentInteractionListener,
-        SharedMusicFragment.OnListFragmentInteractionListener {
+        SharedMusicFragment.OnListFragmentInteractionListener,OfferedMusicsFragment.OnListFragmentInteractionListener {
 
     public NavigationView navigationView;
     private DrawerLayout drawer;
     protected int checkedNavigationItemId = -1;
+    private Handler handler;
+
+    private Runnable checkDestinationReached = new Runnable() {
+        @Override
+        public void run() {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+            final String station = prefs.getString("destination", "");
+            if (station != "") {
+                String url = "http://entertrainment.herokuapp.com/webapi/map/destReached/" + station;
+
+                AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+                asyncHttpClient.get(url, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        try {
+                            if (response.getString("destination reached").equals("true")){
+                                NotificationGenerator.boom(MainActivity.this, station);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                // check if destination is reached in every five minutes
+                handler.postDelayed(checkDestinationReached, 300000);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        handler = new Handler();
+        handler.post(checkDestinationReached);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -51,15 +95,16 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        MainFragment mainFragment = MainFragment.newInstance();
-        fragmentTransaction.replace(R.id.fragment_container,mainFragment);
-        fragmentTransaction.commit();
+        if (savedInstanceState == null){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            MainFragment mainFragment = MainFragment.newInstance();
+            fragmentTransaction.replace(R.id.fragment_container,mainFragment);
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -69,13 +114,6 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().findItem(checkedNavigationItemId).setChecked(false);
             checkedNavigationItemId = -1;
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
@@ -109,14 +147,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_music) {
             replaceFragmentContainer(new MusicFragment());
         } else if (id == R.id.nav_reading) {
-            replaceFragmentContainer(new ReadingFragment());
+            replaceFragmentContainer(new BookQRFragment());
         } else if (id == R.id.nav_map) {
             replaceFragmentContainer(new MapFragment());
-        }
-        else if (id == R.id.nav_movie){
-            replaceFragmentContainer(new MovieFragment());
-        }
-        else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
             return false;
         } else if (id == R.id.nav_send) {
             return false;
@@ -144,9 +178,27 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Song song) {
 
+    }
 
-
+    // Get the results:
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                startReadingActivity(result.getContents());
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 
+    private void startReadingActivity(String url) {
+        Intent i = new Intent(MainActivity.this, ReadingActivity.class);
+        i.putExtra("url", url);
+        startActivity(i);
+    }
 }

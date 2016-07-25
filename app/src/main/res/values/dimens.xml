@@ -20,4 +20,8 @@
     <dimen name="divider_margin">10dp</dimen>
     <dimen name="main_descr_margin">20dp</dimen>
     <dimen name="main_temp_size">30sp</dimen>
+    <dimen name="main_fragment_btn_ic_width">30dp</dimen>
+    <dimen name="main_fragment_btn_ic_height">30dp</dimen>
+    <dimen name="main_fragment_btn_ic_margin">20dp</dimen>
+    <dimen name="main_fragment_btn_height">65dp</dimen>
 </resources>

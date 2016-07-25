@@ -3,9 +3,11 @@ package ge.edu.freeuni.android.entertrainment.map;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.klinker.android.sliding.SlidingActivity;
 import com.loopj.android.http.AsyncHttpClient;
@@ -15,9 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ge.edu.freeuni.android.entertrainment.R;
-
 import cz.msebera.android.httpclient.Header;
+import ge.edu.freeuni.android.entertrainment.R;
 
 public class StationInfoActivity extends SlidingActivity {
 
@@ -95,11 +96,15 @@ public class StationInfoActivity extends SlidingActivity {
         findViewById(R.id.alarm_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences prefs = getApplicationContext().getSharedPreferences("Alarm", MODE_PRIVATE);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(StationInfoActivity.this);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.clear();
                 edit.putString("destination", station);
                 edit.commit();
+
+                String message = "Destination station set to: " + station;
+                Toast toast = Toast.makeText(StationInfoActivity.this, message, Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }
@@ -141,8 +146,7 @@ public class StationInfoActivity extends SlidingActivity {
     }
 
     private static int toCelsius(int kelvin) {
-        int c = kelvin - 273;
-        return c;
+        return kelvin - 273;
     }
 
     private int getImage() {
