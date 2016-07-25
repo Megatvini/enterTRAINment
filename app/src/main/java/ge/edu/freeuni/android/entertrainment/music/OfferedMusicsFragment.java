@@ -13,9 +13,11 @@ import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
+import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
+
 public class OfferedMusicsFragment extends Fragment {
 
-    private static final String PATH = SharedMusicFragment.HOST+"/webapi/songs/offered";
+    private static final String PATH = HOST+"/webapi/songs/offered";
 
     private OnListFragmentInteractionListener mListener;
     private MusicProvider musicProvider;

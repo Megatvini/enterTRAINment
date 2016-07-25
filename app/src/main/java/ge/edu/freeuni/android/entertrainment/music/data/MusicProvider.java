@@ -50,18 +50,17 @@ public class MusicProvider implements  VoteListener {
 
     @Override
     public void downvote(String id) {
-        this.playlistClient.downvote(id,path);
+        this.playlistClient.downvote(path+"/"+id+"/downvote");
     }
 
 
     public void onNewPlayListData(List<Song> songs){
         if(this.sharedAdapter != null) {
             this.sharedAdapter.setData(songs);
-            sharedAdapter.notifyDataSetChanged();
+            this.sharedAdapter.notifyDataSetChanged();
         }
         if(this.offeredAdapter != null) {
             this.offeredAdapter.setData(songs);
-            offeredAdapter.notifyDataSetChanged();
         }
     }
 

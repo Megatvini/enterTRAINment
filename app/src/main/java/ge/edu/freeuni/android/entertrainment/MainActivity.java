@@ -1,6 +1,7 @@
 package ge.edu.freeuni.android.entertrainment;
 
 import android.content.SharedPreferences;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.map.MapFragment;
@@ -23,6 +28,8 @@ import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
+import ge.edu.freeuni.android.entertrainment.reading.BookQRFragment;
+import ge.edu.freeuni.android.entertrainment.reading.ReadingActivity;
 import ge.edu.freeuni.android.entertrainment.reading.ReadingFragment;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -99,7 +106,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -142,7 +148,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_music) {
             replaceFragmentContainer(new MusicFragment());
         } else if (id == R.id.nav_reading) {
-            replaceFragmentContainer(new ReadingFragment());
+            replaceFragmentContainer(new BookQRFragment());
         } else if (id == R.id.nav_map) {
             replaceFragmentContainer(new MapFragment());
         } else if (id == R.id.nav_share) {
@@ -173,5 +179,27 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Song song) {
 
+    }
+
+    // Get the results:
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                startReadingActivity(result.getContents());
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
+    private void startReadingActivity(String url) {
+        Intent i = new Intent(MainActivity.this, ReadingActivity.class);
+        i.putExtra("url", url);
+        startActivity(i);
     }
 }
