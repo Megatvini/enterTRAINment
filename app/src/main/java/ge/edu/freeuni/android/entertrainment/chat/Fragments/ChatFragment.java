@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Constants;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
@@ -49,7 +53,15 @@ public class ChatFragment extends Fragment {
 
         tabLayout = (TabLayout) view.findViewById(R.id.chat_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        EventBus.getDefault().register(this);
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -144,6 +156,15 @@ public class ChatFragment extends Fragment {
                     });
                 }
             });
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ShareEvent event) {
+        if (isVisible()) {
+            String data = "Share about chat";
+            String title = "chatting with passengers...";
+            Utils.shareStringData(getContext(), data, title);
         }
     }
 }

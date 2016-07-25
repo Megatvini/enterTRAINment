@@ -21,6 +21,9 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.greenrobot.eventbus.EventBus;
+
+import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.map.MapFragment;
 import ge.edu.freeuni.android.entertrainment.map.NotificationGenerator;
@@ -159,10 +162,11 @@ public class MainActivity extends AppCompatActivity
         } else if(id == R.id.nav_movie){
             replaceFragmentContainer(new MovieFragment());
         } else if (id == R.id.nav_share) {
+            EventBus.getDefault().post(new ShareEvent());
+        } else if (id == R.id.nav_share) {
             return false;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

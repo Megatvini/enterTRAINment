@@ -10,11 +10,15 @@ import android.widget.Toast;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager;
 import es.voghdev.pdfviewpager.library.remote.DownloadFile;
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 public class ReadingActivity extends AppCompatActivity implements DownloadFile.Listener {
@@ -92,5 +96,12 @@ public class ReadingActivity extends AppCompatActivity implements DownloadFile.L
         if (filePath != null) {
             onSuccess(bookUrl, filePath);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ShareEvent event) {
+        String data = "Share about reading";
+        String title = "Reading a book in train";
+        Utils.shareStringData(ReadingActivity.this, data, title);
     }
 }

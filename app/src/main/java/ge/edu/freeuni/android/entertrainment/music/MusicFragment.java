@@ -12,7 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.ShareEvent;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 public class MusicFragment extends Fragment{
 
@@ -40,9 +46,17 @@ public class MusicFragment extends Fragment{
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        EventBus.getDefault().register(this);
+
         return view;
+    }
 
 
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
     }
 
     @Override
@@ -89,6 +103,16 @@ public class MusicFragment extends Fragment{
                     return "SHARED";
             }
             return null;
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ShareEvent event) {
+        if (isVisible()) {
+            String data = "Share about music";
+            String title = "Listening to music in train";
+            Utils.shareStringData(getContext(), data, title);
         }
     }
 }

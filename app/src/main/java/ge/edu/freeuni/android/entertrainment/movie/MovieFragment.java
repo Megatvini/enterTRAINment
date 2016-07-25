@@ -4,13 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.ShareEvent;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
 import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
@@ -49,9 +54,16 @@ public class MovieFragment extends Fragment implements OnListFragmentInteraction
             recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         }
         createProviders();
+
+        EventBus.getDefault().register(this);
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -92,5 +104,14 @@ public class MovieFragment extends Fragment implements OnListFragmentInteraction
     public void onListFragmentInteraction(Song media) {
         String url = HOST +"/webapi/mediastream/video/"+media.getId();
         Player.start(getContext(),url);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ShareEvent event) {
+        if (isVisible()) {
+            String data = "Share about movie";
+            String title = "Watching a movie in train";
+            Utils.shareStringData(getContext(), data, title);
+        }
     }
 }
