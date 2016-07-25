@@ -23,6 +23,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +33,6 @@ import ge.edu.freeuni.android.entertrainment.map.MapFragment;
 import ge.edu.freeuni.android.entertrainment.map.NotificationGenerator;
 import ge.edu.freeuni.android.entertrainment.movie.MovieFragment;
 import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
-import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 import ge.edu.freeuni.android.entertrainment.reading.BookQRFragment;
@@ -156,12 +156,11 @@ public class MainActivity extends AppCompatActivity
             replaceFragmentContainer(new MovieFragment());
         }
         else if (id == R.id.nav_share) {
-            return false;
+            EventBus.getDefault().post(new ShareEvent());
         } else if (id == R.id.nav_send) {
             return false;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

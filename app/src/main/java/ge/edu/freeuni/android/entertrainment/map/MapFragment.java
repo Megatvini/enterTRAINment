@@ -29,6 +29,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +40,8 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.ShareEvent;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -102,7 +107,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mapFragment.getMapAsync(this);
         nextStation = (TextView) view.findViewById(R.id.next_station);
 
+        EventBus.getDefault().register(this);
+
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
     }
 
     @Override
@@ -181,5 +194,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         newBundle.putString("Station", marker.getTitle());
         startActivity(newIntent);
         return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ShareEvent event) {
+        if (isVisible()) {
+            String data = "Share about map";
+            String title = "Traveling in train till " + nextStation.getText();
+            Utils.shareStringData(getContext(), data, title);
+        }
     }
 }

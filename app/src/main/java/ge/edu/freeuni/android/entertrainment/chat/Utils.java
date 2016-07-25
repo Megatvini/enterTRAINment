@@ -1,6 +1,7 @@
 package ge.edu.freeuni.android.entertrainment.chat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
@@ -94,5 +95,13 @@ public class Utils {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(Constants.READING_PAGE_KEY + url, 1);
+    }
+
+    public static void shareStringData(Context context, String data, String title) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, data);
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, title));
     }
 }
