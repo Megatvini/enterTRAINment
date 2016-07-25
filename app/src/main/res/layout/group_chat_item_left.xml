@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/medium_padding"
+    android:layout_marginStart="@dimen/medium_padding"
+    android:layout_marginRight="@dimen/medium_padding"
+    android:layout_marginEnd="@dimen/medium_padding"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/incoming_layout_bubble"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/medium_padding"
-        android:layout_marginStart="@dimen/medium_padding"
-        android:layout_marginRight="@dimen/medium_padding"
-        android:layout_marginEnd="@dimen/medium_padding">
-        <TextView
-            android:id="@+id/group_chat_item_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/username_text_size"
-            android:textStyle="bold"
-            tools:text="Megatvini"/>
-
-        <TextView
-            android:id="@+id/group_chat_item_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            tools:text="14:07:21"
-            android:layout_marginLeft="@dimen/small_margin"
-            android:layout_marginStart="@dimen/small_margin"
-            android:layout_alignBaseline="@id/group_chat_item_username"
-            android:textSize="@dimen/chat_date_text_size"/>
+        android:layout_below="@+id/group_chat_item_username"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/bubble_incoming">
 
         <TextView
             android:id="@+id/group_chat_item_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/group_chat_item_username"
-            android:layout_marginTop="@dimen/small_margin"
-            tools:text="adad"
-            android:textSize="@dimen/chat_text_size"/>
-    </RelativeLayout>
+            android:layout_gravity="center"
+            android:paddingLeft="@dimen/message_padding_tale_side"
+            android:layout_margin="@dimen/message_margin"
+            android:autoLink="web"/>
+    </FrameLayout>
+    <TextView
+        android:id="@+id/group_chat_item_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/username_text_size"
+        android:textStyle="bold"
+        tools:text="Megatvini"/>
 
-</android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/group_chat_item_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="14:07:21"
+        android:layout_toRightOf="@+id/group_chat_item_username"
+        android:layout_marginLeft="@dimen/small_margin"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_alignBaseline="@id/group_chat_item_username"
+        android:textSize="@dimen/chat_date_text_size"/>
+
+</RelativeLayout>
 

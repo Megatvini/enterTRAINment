@@ -115,6 +115,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onDestroyView() {
         EventBus.getDefault().unregister(this);
+        handler.removeCallbacks(runTrain);
         super.onDestroyView();
     }
 
@@ -134,12 +135,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 .target(tbilisi).zoom(8).build();
         googleMap.moveCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
-    }
-
-    @Override
-    public void onDestroyView() {
-        handler.removeCallbacks(runTrain);
-        super.onDestroyView();
     }
 
     private String[] cities = {"Rustavi", "Tbilisi","Gori", "Khashuri", "Zestafoni", "Kutaisi", "Samtredia", "Poti", "Kobuleti", "Batumi"};

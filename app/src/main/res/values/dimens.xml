@@ -9,7 +9,7 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="medium_padding">20dp</dimen>
-    <dimen name="username_text_size">18sp</dimen>
+    <dimen name="username_text_size">12sp</dimen>
     <dimen name="small_margin">10dp</dimen>
     <dimen name="chat_date_text_size">12sp</dimen>
     <dimen name="chat_text_size">14sp</dimen>
@@ -25,4 +25,8 @@
     <dimen name="main_fragment_btn_ic_margin">20dp</dimen>
     <dimen name="main_fragment_btn_height">60dp</dimen>
     <dimen name="main_fragment_btn_margin">3dp</dimen>
+    <dimen name="message_padding_tale_side">15dp</dimen>
+    <dimen name="message_margin">6dp</dimen>
+    <dimen name="bubble_message_padding_inside">60dp</dimen>
+    <dimen name="bubble_message_padding_outside">8dp</dimen>
 </resources>
