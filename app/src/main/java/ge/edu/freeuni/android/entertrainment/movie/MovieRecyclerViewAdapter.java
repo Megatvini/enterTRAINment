@@ -7,16 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
 import java.util.List;
 
 
 public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Movie> mValues;
-    private final MovieFragment.OnListFragmentInteractionListener mListener;
+    private final List<Song> mValues;
+    private final OnListFragmentInteractionListener mListener;
 
-    public MovieRecyclerViewAdapter(List<Movie> items, MovieFragment.OnListFragmentInteractionListener listener) {
+    public MovieRecyclerViewAdapter(List<Song> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -30,9 +31,9 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+        holder.media = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContentView.setText(mValues.get(position).getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +41,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.media);
                 }
             }
         });
@@ -55,7 +56,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public Movie mItem;
+        public Song media;
 
         public ViewHolder(View view) {
             super(view);
@@ -64,9 +65,10 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
+    }
+
+    public void setData(List<Song> songs){
+        this.mValues.clear();
+        this.mValues.addAll(songs);
     }
 }

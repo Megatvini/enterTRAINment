@@ -18,7 +18,6 @@ public class PlaylistClient {
     private MusicProvider musicProvider;
 
     public PlaylistClient(MusicProvider musicProvider){
-
         this.musicProvider = musicProvider;
     }
 

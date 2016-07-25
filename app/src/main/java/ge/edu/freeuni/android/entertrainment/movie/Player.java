@@ -53,7 +53,9 @@ public class Player extends AppCompatActivity {
             myVideoView.setMediaController(mediaControls);
 
             //set the uri of the video to be played
-            myVideoView.setVideoPath("http://cdn.imovies.ge/cdn?movie_id=450144662&server=212.72.157.229&uri=scrt/23/2016062319504660_hd_rus.mp4&md5=8xAMXiaPGPb3Yt0pGVsfVQ&expires=1469591881");
+            String imovies = "http://cdn.imovies.ge/cdn?movie_id=450144662&server=212.72.157.229&uri=scrt/23/2016062319504660_hd_rus.mp4&md5=8xAMXiaPGPb3Yt0pGVsfVQ&expires=1469591881";
+            String local = "http://192.168.77.253:8080/webapi/mediastream/video/1.mp4";
+            myVideoView.setVideoPath(local);
 
         } catch (Exception e) {
             Log.e("Error", e.getMessage());

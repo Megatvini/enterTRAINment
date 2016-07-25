@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
-public class MovieFragment extends Fragment {
+import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
+
+public class MovieFragment extends Fragment implements OnListFragmentInteractionListener{
 
     private OnListFragmentInteractionListener mListener;
     private MovieRecyclerViewAdapter adapter;
@@ -33,7 +36,6 @@ public class MovieFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createProviders();
 
     }
 
@@ -41,19 +43,12 @@ public class MovieFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
-        createProviders();
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-
             recyclerView = (RecyclerView) view;
-
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
-
-            adapter = new MovieRecyclerViewAdapter(provider.getMovies(), mListener);
-
-            recyclerView.setAdapter(adapter);
         }
+        createProviders();
         return view;
     }
 
@@ -61,12 +56,7 @@ public class MovieFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
+        mListener = this;
     }
 
     @Override
@@ -78,12 +68,10 @@ public class MovieFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        createProviders();
+
     }
 
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Movie item);
-    }
+
 
     public void createProviders(){
 
@@ -97,8 +85,12 @@ public class MovieFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
         }
 
-
+        provider.loadData();
     }
 
-
+    @Override
+    public void onListFragmentInteraction(Song media) {
+        String url = HOST +"/webapi/mediastream/video/"+media.getId();
+        Player.start(getContext(),url);
+    }
 }

@@ -32,6 +32,11 @@
             android:text="chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/movies_button"
+            android:text="movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/map_button"

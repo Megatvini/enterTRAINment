@@ -1,6 +1,8 @@
 package ge.edu.freeuni.android.entertrainment.music;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,11 +14,12 @@ import android.view.ViewGroup;
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
+import ge.edu.freeuni.android.entertrainment.music.listeners.OnListFragmentInteractionListener;
 
 import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
 import static ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment.PLAYLIST_ENDPOINT;
 
-public class OfferedMusicsFragment extends Fragment {
+public class OfferedMusicsFragment extends Fragment implements OnListFragmentInteractionListener {
 
     private static final String PATH = HOST+"/webapi/songs/offered";
 
@@ -55,12 +58,7 @@ public class OfferedMusicsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
+        mListener = this;
     }
 
     @Override
@@ -75,9 +73,17 @@ public class OfferedMusicsFragment extends Fragment {
         super.onResume();
     }
 
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Song item);
+    @Override
+    public void onListFragmentInteraction(Song song) {
+        String uriString = HOST + "/webapi/mediastream/audio/" + song.getId();
+        System.out.println(uriString);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.parse(uriString), "audio/mp3");
+        startActivity(intent);
     }
+
+
 
     private void initAdapterAndProvider() {
         if (musicProvider == null)

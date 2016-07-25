@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import ge.edu.freeuni.android.entertrainment.R;
-import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment.OnListFragmentInteractionListener;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
+import ge.edu.freeuni.android.entertrainment.music.listeners.OnListFragmentInteractionListener;
 
 import java.util.List;
 

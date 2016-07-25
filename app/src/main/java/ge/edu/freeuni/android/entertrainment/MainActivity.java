@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.map.MapFragment;
+import ge.edu.freeuni.android.entertrainment.movie.MovieFragment;
 import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment;
 import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
@@ -27,7 +28,7 @@ import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChatFragment.OnFragmentInteractionListener,
-        SharedMusicFragment.OnListFragmentInteractionListener,OfferedMusicsFragment.OnListFragmentInteractionListener {
+        SharedMusicFragment.OnListFragmentInteractionListener {
 
     public NavigationView navigationView;
     private DrawerLayout drawer;
@@ -111,7 +112,11 @@ public class MainActivity extends AppCompatActivity
             replaceFragmentContainer(new ReadingFragment());
         } else if (id == R.id.nav_map) {
             replaceFragmentContainer(new MapFragment());
-        } else if (id == R.id.nav_share) {
+        }
+        else if (id == R.id.nav_movie){
+            replaceFragmentContainer(new MovieFragment());
+        }
+        else if (id == R.id.nav_share) {
             return false;
         } else if (id == R.id.nav_send) {
             return false;
@@ -138,13 +143,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Song song) {
-        String uriString = HOST + "/webapi/mediastream/audio/" + song.getId();
-        System.out.println(uriString);
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse(uriString), "audio/mp3");
-        startActivity(intent);
 
-//        Player.start(this,uriString);
+
+
     }
+
+
 }
