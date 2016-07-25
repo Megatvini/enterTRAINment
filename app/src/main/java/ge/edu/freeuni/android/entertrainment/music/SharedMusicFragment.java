@@ -19,14 +19,17 @@ import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
+import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
+
 public class SharedMusicFragment extends Fragment {
 
-    public static final String HOST = "http://entertrainment.herokuapp.com";
+
     public static final String PLAYLIST_ENDPOINT = HOST+"/webapi/songs/shared";
     private MusicProvider musicProvider;
 
     private OnListFragmentInteractionListener mListener;
     private SharedMusicRecyclerViewAdapter adapter;
+    private SharedMusicService service;
 
 
     public SharedMusicFragment() {
@@ -36,14 +39,20 @@ public class SharedMusicFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        updateUI();
         initAdapterAndProvider();
 
     }
 
     private void initAdapterAndProvider() {
-
-        musicProvider = new MusicProvider(getContext(),PLAYLIST_ENDPOINT);
-        adapter = new SharedMusicRecyclerViewAdapter(musicProvider.getSongs(), mListener);
+        if (musicProvider == null)
+            musicProvider = new MusicProvider(getContext(),PLAYLIST_ENDPOINT);
+        if (service == null) {
+            service = new SharedMusicService(musicProvider);
+            service.setListener(this);
+        }
+        if (adapter == null)
+            adapter = new SharedMusicRecyclerViewAdapter(musicProvider.getSongs(), mListener);
         musicProvider.setSharedAdapter(adapter);
         adapter.setVoteListener(musicProvider);
         musicProvider.loadData();
@@ -61,14 +70,12 @@ public class SharedMusicFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);
         }
 
 
         final ImageButton playButton = (ImageButton) parentView.findViewById(R.id.play_button);
-        final String realRadio = "http://uk1-pn.webcast-server.net:8698/";
-
         final String local1 = HOST + "/song";
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,12 +88,14 @@ public class SharedMusicFragment extends Fragment {
                 }
             }
         });
+        updateUI();
         return parentView;
     }
 
 
     @Override
     public void onAttach(Context context) {
+        updateUI();
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
@@ -102,6 +111,7 @@ public class SharedMusicFragment extends Fragment {
         statusIntentFilter.addAction(PlayerService.UPDATE_PLAYING_KEY);
         getActivity().registerReceiver(this.updateStatusBroadcastReceiver, statusIntentFilter);
         initAdapterAndProvider();
+        updateUI();
         super.onResume();
     }
 
@@ -128,10 +138,21 @@ public class SharedMusicFragment extends Fragment {
 
     };
 
+    public void updateData(){
+        this.musicProvider.loadData();
+    }
+
+    public void connectionClosed(){
+        this.service = new SharedMusicService(musicProvider);
+        service.setListener(this);
+    }
 
 
     protected void updateUI() {
         final ImageButton playButton = (ImageButton) getActivity().findViewById(R.id.play_button);
+        if (playButton == null){
+            return;
+        }
         MainApplication application = (MainApplication) getActivity().getApplication();
         if (application.isPlaying()){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
