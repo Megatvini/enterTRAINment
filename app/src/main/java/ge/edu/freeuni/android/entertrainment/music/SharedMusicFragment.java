@@ -130,6 +130,7 @@ public class SharedMusicFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Song song);
     }
+
     private BroadcastReceiver updateStatusBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

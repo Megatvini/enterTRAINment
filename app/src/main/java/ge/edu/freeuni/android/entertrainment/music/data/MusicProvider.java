@@ -61,6 +61,7 @@ public class MusicProvider implements  VoteListener {
         }
         if(this.offeredAdapter != null) {
             this.offeredAdapter.setData(songs);
+            this.offeredAdapter.notifyDataSetChanged();
         }
     }
 

@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:elevation="10dp"
+    android:layout_marginTop="5dp"
 
-    <TextView
-        android:id="@+id/id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
-
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
-</LinearLayout>
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_weight="8"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:weightSum="12"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:id="@+id/song_image"
+                tools:src="@drawable/ic_audiotrack_black_24dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/song_image" />
+        </RelativeLayout>
+        <TextView
+            android:gravity="center"
+            android:id="@+id/song_name"
+            android:layout_weight="8"
+            tools:text="song namadasd asd asdasdasd asd asd asd sade"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>

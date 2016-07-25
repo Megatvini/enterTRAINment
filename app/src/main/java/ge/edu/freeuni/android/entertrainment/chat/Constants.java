@@ -10,7 +10,7 @@ public interface Constants {
     String USERNAME_KEY = "USERNAME";
     int CHAT_ITEM_DIVIDER_HEIGHT = 10;
     String PAIR_FOUND_CODE = "0b83465e-000b-4361-901f-e83840c6a29f";
+    String HOST = "http://entertrainment.herokuapp.com";
+    String HOST_IP = "entertrainment.herokuapp.com";
     String READING_PAGE_KEY = "READING_PAGE_KEY";
-    String HOST = "http://192.168.122.1:8080";
-    String HOST_IP = "192.168.77.253:8080";
 }

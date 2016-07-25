@@ -56,15 +56,17 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <service
             android:name=".music.PlayerService"
-            android:enabled="true">
-        </service>
+            android:enabled="true"></service>
+
+        <activity
+            android:name=".movie.Player"
+            android:label="@string/title_activity_player"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".reading.ReadingActivity"

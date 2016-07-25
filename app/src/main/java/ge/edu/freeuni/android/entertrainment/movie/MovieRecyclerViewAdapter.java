@@ -1,6 +1,5 @@
-package ge.edu.freeuni.android.entertrainment.music;
+package ge.edu.freeuni.android.entertrainment.movie;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +11,16 @@ import com.squareup.picasso.Picasso;
 
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
-import ge.edu.freeuni.android.entertrainment.music.listeners.OnListFragmentInteractionListener;
 
 import java.util.List;
 
-public class OfferedMusicRecyclerViewAdapter extends RecyclerView.Adapter<OfferedMusicRecyclerViewAdapter.ViewHolder> implements MusicAdapter {
 
-    private List<Song> mValues;
+public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
+
+    private final List<Song> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public OfferedMusicRecyclerViewAdapter(List<Song> items, OnListFragmentInteractionListener listener) {
+    public MovieRecyclerViewAdapter(List<Song> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -29,28 +28,23 @@ public class OfferedMusicRecyclerViewAdapter extends RecyclerView.Adapter<Offere
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.offered_music_fragment_item, parent, false);
+                .inflate(R.layout.fragment_movie, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.song = mValues.get(position);
-        Context context = holder.mView.getContext();
+        holder.media = mValues.get(position);
+        holder.movie_description.setText(mValues.get(position).getName());
 
-        if(!holder.song.getImage().equals("")){
-            Picasso.with(context).load(holder.song.getImage()).into(holder.songImage);
-        }
-
-        holder.name.setText(holder.song.getName());
-
+        Picasso.with(holder.mView.getContext()).load(holder.media.getImage()).into(holder.movie_image);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.song);
+                    mListener.onListFragmentInteraction(holder.media);
                 }
             }
         });
@@ -61,23 +55,23 @@ public class OfferedMusicRecyclerViewAdapter extends RecyclerView.Adapter<Offere
         return mValues.size();
     }
 
-    @Override
-    public void setData(List<Song> songs) {
-        this.mValues = songs;
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final ImageView songImage;
-        public final TextView name;
-        public Song song;
+        public final ImageView movie_image;
+        public final TextView movie_description;
+        public Song media;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            songImage = (ImageView) view.findViewById(R.id.song_image);
-            name = (TextView) view.findViewById(R.id.song_name);
+            movie_image = (ImageView) view.findViewById(R.id.movie_image);
+            movie_description = (TextView) view.findViewById(R.id.movie_description);
         }
 
+    }
+
+    public void setData(List<Song> songs){
+        this.mValues.clear();
+        this.mValues.addAll(songs);
     }
 }

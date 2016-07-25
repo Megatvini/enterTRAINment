@@ -22,6 +22,10 @@
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_public_black_24dp"
             android:title="Map" />
+        <item
+            android:id="@+id/nav_movie"
+            android:icon="@drawable/ic_movie_black_24dp"
+            android:title="Movies" />
     </group>
 
     <item android:title="Communicate">
