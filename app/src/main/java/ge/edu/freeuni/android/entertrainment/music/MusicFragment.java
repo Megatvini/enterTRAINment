@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -123,7 +122,7 @@ public class MusicFragment extends Fragment{
         if (isVisible()) {
             String data = "Share about music";
             String title = "Listening to music in train";
-            Utils.shareStringData(getContext(), data, title);
+            Utils.shareStringData(getContext(), title, data);
         }
     }
 }

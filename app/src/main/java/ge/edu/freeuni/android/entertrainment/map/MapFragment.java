@@ -202,7 +202,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         if (isVisible()) {
             String data = "Share about map";
             String title = "Traveling in train till " + nextStation.getText();
-            Utils.shareStringData(getContext(), data, title);
+            Utils.shareStringData(getContext(), title, data);
         }
     }
 

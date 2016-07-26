@@ -165,7 +165,7 @@ public class ChatFragment extends Fragment {
         if (isVisible()) {
             String data = "Share about chat";
             String title = "chatting with passengers...";
-            Utils.shareStringData(getContext(), data, title);
+            Utils.shareStringData(getContext(), title, data);
         }
     }
 

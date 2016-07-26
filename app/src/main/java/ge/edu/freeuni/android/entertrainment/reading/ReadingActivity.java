@@ -102,6 +102,6 @@ public class ReadingActivity extends AppCompatActivity implements DownloadFile.L
     public void onMessageEvent(ShareEvent event) {
         String data = "Share about reading";
         String title = "Reading a book in train";
-        Utils.shareStringData(ReadingActivity.this, data, title);
+        Utils.shareStringData(ReadingActivity.this, title, data);
     }
 }

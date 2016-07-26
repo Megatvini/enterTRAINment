@@ -115,7 +115,7 @@ public class MovieFragment extends Fragment implements OnListFragmentInteraction
         if (isVisible()) {
             String data = "Share about movie";
             String title = "Watching a movie in train";
-            Utils.shareStringData(getContext(), data, title);
+            Utils.shareStringData(getContext(), title, data);
         }
     }
 }
