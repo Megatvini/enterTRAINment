@@ -23,6 +23,7 @@ public class PlaylistClient {
 
 
     public void loadPlaylist(String path){
+        System.out.println(path);
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.get(path,null,new JsonHttpResponseHandler(){
             @Override
