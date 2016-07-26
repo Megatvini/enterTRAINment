@@ -27,7 +27,7 @@
     <LinearLayout
         android:id="@+id/random_chat_input_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:padding="5dp"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
@@ -37,8 +37,11 @@
             android:id="@+id/random_chat_edit_text"
             android:layout_width="0dp"
             android:layout_weight="0.9"
-            android:layout_height="match_parent"
-            android:hint="@string/android_chat_message_hint"/>
+            android:layout_height="wrap_content"
+            android:hint="@string/android_chat_message_hint"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="350"
+            android:maxLines="4"/>
 
         <ImageView
             android:id="@+id/random_chat_btn_send_text"
