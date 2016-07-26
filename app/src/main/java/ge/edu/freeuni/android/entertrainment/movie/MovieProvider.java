@@ -18,6 +18,7 @@ public class MovieProvider {
 
     public MovieProvider(){
         this.songs = new ArrayList<>();
+        client = new MovieClient(this);
     }
 
     public List<Song> getMovies() {
@@ -25,8 +26,9 @@ public class MovieProvider {
     }
 
     public void setRecyclerViewAdapter(MovieRecyclerViewAdapter recyclerViewAdapter) {
+        System.out.println("set");
         this.recyclerViewAdapter = recyclerViewAdapter;
-        client = new MovieClient(this);
+
     }
 
     public void loadData(){
@@ -34,6 +36,8 @@ public class MovieProvider {
     }
 
     public void onNewPlayListData(List<Song> songList) {
+        this.songs = songList;
+        System.out.println("new data");
         recyclerViewAdapter.setData(songList);
         recyclerViewAdapter.notifyDataSetChanged();
     }

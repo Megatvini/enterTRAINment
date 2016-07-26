@@ -13,6 +13,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import ge.edu.freeuni.android.entertrainment.MainActivity;
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
@@ -41,7 +42,6 @@ public class MovieFragment extends Fragment implements OnListFragmentInteraction
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -52,8 +52,12 @@ public class MovieFragment extends Fragment implements OnListFragmentInteraction
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
+            provider = new MovieProvider();
+            adapter = new MovieRecyclerViewAdapter(provider.getMovies(),mListener);
+            recyclerView.setAdapter(adapter);
+            provider.setRecyclerViewAdapter(adapter);
         }
-        createProviders();
+
 
         EventBus.getDefault().register(this);
         return view;
@@ -80,22 +84,15 @@ public class MovieFragment extends Fragment implements OnListFragmentInteraction
     @Override
     public void onResume() {
         super.onResume();
+        createProviders();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getNavigationView().getMenu().findItem(R.id.nav_movie).setChecked(true);
 
     }
 
 
 
     public void createProviders(){
-
-        if(provider == null) {
-            provider = new MovieProvider();
-        }
-        if (adapter == null){
-            adapter = new MovieRecyclerViewAdapter(provider.getMovies(),mListener);
-            provider.setRecyclerViewAdapter(adapter);
-            if (recyclerView!= null)
-                recyclerView.setAdapter(adapter);
-        }
 
         provider.loadData();
     }

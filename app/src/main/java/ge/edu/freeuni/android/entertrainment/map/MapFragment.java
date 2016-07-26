@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import ge.edu.freeuni.android.entertrainment.MainActivity;
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
@@ -203,5 +204,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             String title = "Traveling in train till " + nextStation.getText();
             Utils.shareStringData(getContext(), data, title);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getNavigationView().getMenu().findItem(R.id.nav_map).setChecked(true);
     }
 }
