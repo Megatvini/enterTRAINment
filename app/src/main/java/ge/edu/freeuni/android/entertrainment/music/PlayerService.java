@@ -96,7 +96,7 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
         if (action.equalsIgnoreCase(ACTION_START)) {
             handleActionStart(path, songName);
         } else if (action.equalsIgnoreCase(ACTION_STOP)) {
-           stop();
+            stop();
         }
         else if (action.equalsIgnoreCase(ACTION_PAUSE)) {
             pause();
@@ -216,7 +216,7 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
     private void stop() {
         stopPlaying();
         NotificationManager notificationManager = (NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE );
-       notificationManager.cancel(NOTIFICATION_ID);
+        notificationManager.cancel(NOTIFICATION_ID);
     }
 
     private void pause(){
@@ -246,27 +246,29 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
         WifiManager.WifiLock wifiLock = mainApplication.getWifiLock();
         if (wifiLock.isHeld())
             wifiLock.release();
+        stopForeground(true);
         updateActivity(false);
     }
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
+
+        System.out.println("onpreapared");
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC,
                 AudioManager.AUDIOFOCUS_GAIN);
-        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+
             mediaPlayer.start();
             //startForegroundWrapper();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mController.getTransportControls().play();
             }
             updateActivity(true);
-        }
+
     }
 
 
     private void startForegroundWrapper() {
-        String songName = this.songName;
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
                 new Intent(getApplicationContext(), MainActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
@@ -304,22 +306,13 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
                     mMediaPlayer = new MediaPlayer();
                     mainApplication.setMediaPlayer(mMediaPlayer);
                 } else if (!mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.reset();
-                    try {
-                        mMediaPlayer.setDataSource(path);
-                        mMediaPlayer.prepareAsync();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    handleActionStart(path,songName);
                 }
                 mMediaPlayer.setVolume(1.0f, 1.0f);
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS:
-                if (mMediaPlayer.isPlaying()) mMediaPlayer.stop();
-                mMediaPlayer.release();
-                mMediaPlayer = null;
-                break;
+                pause();
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (mMediaPlayer.isPlaying()) mMediaPlayer.setVolume(0.1f, 0.1f);
