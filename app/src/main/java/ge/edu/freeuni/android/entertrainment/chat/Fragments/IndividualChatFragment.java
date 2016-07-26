@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
     private Button findPairButton;
     private ChatAdapter chatAdapter;
     private ProgressBar spinner;
+    private LinearLayout chatInputLayout;
 
 
 
@@ -102,6 +104,14 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
             }
         });
 
+        view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                recyclerView.smoothScrollToPosition(chatAdapter.getItemCount());
+            }
+        });
+
+        chatInputLayout = (LinearLayout) view.findViewById(R.id.random_chat_input_layout);
         return view;
     }
 
@@ -156,6 +166,8 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
         recyclerView.setVisibility(View.GONE);
         chatAdapter.clearEntries();
         findPairButton.setVisibility(View.VISIBLE);
+        chatInputLayout.setVisibility(View.GONE);
+        Utils.hideSoftKeyboard(getActivity());
     }
 
     @Override
@@ -163,6 +175,7 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
         spinner.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
         Toast.makeText(getContext(), "Connection found", Toast.LENGTH_SHORT).show();
+        chatInputLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

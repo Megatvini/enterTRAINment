@@ -1,11 +1,13 @@
 package ge.edu.freeuni.android.entertrainment.chat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.view.inputmethod.InputMethodManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,5 +105,13 @@ public class Utils {
         sendIntent.putExtra(Intent.EXTRA_TEXT, data);
         sendIntent.setType("text/plain");
         context.startActivity(Intent.createChooser(sendIntent, title));
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
     }
 }
