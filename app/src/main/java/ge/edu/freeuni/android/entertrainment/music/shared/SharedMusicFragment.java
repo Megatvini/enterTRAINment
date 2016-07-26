@@ -14,14 +14,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import ge.edu.freeuni.android.entertrainment.MainApplication;
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.ShareEvent;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 import ge.edu.freeuni.android.entertrainment.music.PlayerService;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
+import static ge.edu.freeuni.android.entertrainment.R.drawable.na;
 import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
 
 public class SharedMusicFragment extends Fragment {
@@ -95,6 +102,9 @@ public class SharedMusicFragment extends Fragment {
                 }
             }
         });
+
+        EventBus.getDefault().register(this);
+
         updateUI();
         return parentView;
     }
@@ -176,5 +186,21 @@ public class SharedMusicFragment extends Fragment {
             }
         }
 
+    }
+
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ShareEvent event) {
+        if (isVisible()) {
+            List<Song> songs = musicProvider.getSongs();
+            if (songs.size()!=0){
+                PlayerService.NameInfo nameInfo = new PlayerService.NameInfo(songs.get(0).getName());
+                String data = String.format(" %s  \n  %s ", nameInfo.getArtist(), nameInfo.getTitle());
+                String title = "Listening to  awesome song";
+                Utils.shareStringData(getContext(), title, data);
+            }
+
+        }
     }
 }

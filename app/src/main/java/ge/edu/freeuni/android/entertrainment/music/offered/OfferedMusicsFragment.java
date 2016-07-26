@@ -11,9 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
