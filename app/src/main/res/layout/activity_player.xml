@@ -3,12 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/player_screen"
+    android:background="@color/colorBlack"
     android:layout_gravity="center" >
-
-    <VideoView
-        android:id="@+id/video_view"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" >
+        <VideoView
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </FrameLayout>

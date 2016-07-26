@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.music.PlayerService;
 import ge.edu.freeuni.android.entertrainment.music.shared.SharedMusicFragment.OnListFragmentInteractionListener;
 import ge.edu.freeuni.android.entertrainment.music.VoteListener;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
@@ -46,7 +47,14 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Context context = holder.mView.getContext();
         holder.song = mValues.get(position);
-        holder.songName.setText(mValues.get(position).name);
+        String name = mValues.get(position).name;
+
+        PlayerService.NameInfo nameInfo = new PlayerService.NameInfo(name).invoke();
+
+        holder.songName.setText(nameInfo.getTitle());
+        holder.songAuthor.setText(nameInfo.getArtist());
+
+
         holder.songRating.setText(mValues.get(position).rating+"");
 
         String path = holder.song.getImage();
@@ -113,6 +121,7 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
         public final View mView;
         public final ImageView songImage;
         public final TextView songName;
+        public final TextView songAuthor;
         public final TextView songRating;
         public final ImageButton upvote;
         public final ImageButton downvote;
@@ -127,6 +136,7 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
 
             downvote = (ImageButton) view.findViewById(R.id.downvote);
             upvote = (ImageButton) view.findViewById(R.id.upvote);
+            songAuthor = (TextView) view.findViewById(R.id.song_author);
         }
 
     }
