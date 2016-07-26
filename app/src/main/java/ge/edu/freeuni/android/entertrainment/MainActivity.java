@@ -29,7 +29,7 @@ import ge.edu.freeuni.android.entertrainment.map.MapFragment;
 import ge.edu.freeuni.android.entertrainment.map.NotificationGenerator;
 import ge.edu.freeuni.android.entertrainment.movie.MovieFragment;
 import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
-import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment;
+import ge.edu.freeuni.android.entertrainment.music.shared.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 import ge.edu.freeuni.android.entertrainment.reading.BookQRFragment;
 import ge.edu.freeuni.android.entertrainment.reading.ReadingActivity;
@@ -38,7 +38,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChatFragment.OnFragmentInteractionListener,
@@ -108,6 +107,9 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.fragment_container,mainFragment);
             fragmentTransaction.commit();
         }
+        String songName;
+// assign the song name to songName
+
     }
 
     @Override

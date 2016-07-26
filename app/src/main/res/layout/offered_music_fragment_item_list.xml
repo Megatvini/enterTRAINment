@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="ge.edu.freeuni.android.entertrainment.music.OfferedMusicsFragment"
+    tools:context="ge.edu.freeuni.android.entertrainment.music.offered.OfferedMusicsFragment"
     tools:listitem="@layout/offered_music_fragment_item" />

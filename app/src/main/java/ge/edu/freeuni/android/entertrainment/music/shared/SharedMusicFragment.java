@@ -1,4 +1,4 @@
-package ge.edu.freeuni.android.entertrainment.music;
+package ge.edu.freeuni.android.entertrainment.music.shared;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 
 import ge.edu.freeuni.android.entertrainment.MainApplication;
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.music.PlayerService;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
@@ -82,7 +83,7 @@ public class SharedMusicFragment extends Fragment {
             public void onClick(View view) {
                 MainApplication application = (MainApplication) getActivity().getApplication();
                 if (!application.isPlaying()){
-                    PlayerService.startActionStart(getActivity(),local1);
+                    PlayerService.startActionStart(getActivity(),local1,musicProvider.getSongs().get(0).getName());
                 }else {
                     PlayerService.startActionStop(getActivity());
                 }

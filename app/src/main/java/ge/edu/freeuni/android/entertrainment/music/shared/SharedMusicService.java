@@ -1,4 +1,4 @@
-package ge.edu.freeuni.android.entertrainment.music;
+package ge.edu.freeuni.android.entertrainment.music.shared;
 
 
 import android.util.Log;

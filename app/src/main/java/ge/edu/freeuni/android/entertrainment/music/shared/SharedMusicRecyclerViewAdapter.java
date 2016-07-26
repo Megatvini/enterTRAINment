@@ -1,4 +1,4 @@
-package ge.edu.freeuni.android.entertrainment.music;
+package ge.edu.freeuni.android.entertrainment.music.shared;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +18,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ge.edu.freeuni.android.entertrainment.R;
-import ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment.OnListFragmentInteractionListener;
+import ge.edu.freeuni.android.entertrainment.music.shared.SharedMusicFragment.OnListFragmentInteractionListener;
+import ge.edu.freeuni.android.entertrainment.music.VoteListener;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
 public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedMusicRecyclerViewAdapter.ViewHolder>{

@@ -1,4 +1,4 @@
-package ge.edu.freeuni.android.entertrainment.music;
+package ge.edu.freeuni.android.entertrainment.music.offered;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import ge.edu.freeuni.android.entertrainment.R;
+import ge.edu.freeuni.android.entertrainment.music.MusicAdapter;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 import ge.edu.freeuni.android.entertrainment.music.listeners.OnListFragmentInteractionListener;
 

@@ -5,8 +5,8 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-import ge.edu.freeuni.android.entertrainment.music.OfferedMusicRecyclerViewAdapter;
-import ge.edu.freeuni.android.entertrainment.music.SharedMusicRecyclerViewAdapter;
+import ge.edu.freeuni.android.entertrainment.music.offered.OfferedMusicRecyclerViewAdapter;
+import ge.edu.freeuni.android.entertrainment.music.shared.SharedMusicRecyclerViewAdapter;
 import ge.edu.freeuni.android.entertrainment.music.VoteListener;
 
 public class MusicProvider implements  VoteListener {
@@ -55,6 +55,7 @@ public class MusicProvider implements  VoteListener {
 
 
     public void onNewPlayListData(List<Song> songs){
+        this.songs = songs;
         if(this.sharedAdapter != null) {
             this.sharedAdapter.setData(songs);
             this.sharedAdapter.notifyDataSetChanged();

@@ -1,4 +1,4 @@
-package ge.edu.freeuni.android.entertrainment.music;
+package ge.edu.freeuni.android.entertrainment.music.offered;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,13 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 import ge.edu.freeuni.android.entertrainment.music.listeners.OnListFragmentInteractionListener;
 
 import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
-import static ge.edu.freeuni.android.entertrainment.music.SharedMusicFragment.PLAYLIST_ENDPOINT;
 
 public class OfferedMusicsFragment extends Fragment implements OnListFragmentInteractionListener {
 
@@ -75,7 +77,8 @@ public class OfferedMusicsFragment extends Fragment implements OnListFragmentInt
 
     @Override
     public void onListFragmentInteraction(Song song) {
-        String uriString = HOST + "/webapi/mediastream/audio/" + song.getId();
+        String id = song.getId();
+        String uriString = HOST + "/webapi/mediastream/audio/" + id;
         System.out.println(uriString);
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
