@@ -78,11 +78,11 @@ public class OfferedMusicsFragment extends Fragment implements OnListFragmentInt
     @Override
     public void onListFragmentInteraction(Song song) {
         String id = song.getId();
-        String uriString = HOST + "/webapi/mediastream/audio/" + id;
-        System.out.println(uriString);
+        String uriString1 = HOST + "/webapi/mediastream/audio/" + id;
+        System.out.println(uriString1);
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse(uriString), "audio/mp3");
+        intent.setDataAndType(Uri.parse(uriString1), "audio/mp3");
         startActivity(intent);
     }
 
