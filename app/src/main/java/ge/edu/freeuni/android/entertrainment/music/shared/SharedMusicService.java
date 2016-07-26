@@ -66,7 +66,7 @@ public class SharedMusicService  {
         //JSONArray  jsonArray= new JSONArray(s);
         //List<Song> songs = Utils.getSongsFromJsonArray(jsonArray);
         System.out.println("message: "+s);
-//        musicProvider.loadData();
+        musicProvider.loadData();
 
     }
 

@@ -53,6 +53,9 @@ public class SharedMusicRecyclerViewAdapter extends RecyclerView.Adapter<SharedM
         if (!path.equals(""))
             Picasso.with(holder.mView.getContext()).load(path).into(holder.songImage);
 
+        setTint(holder.downvote, context, R.color.cardview_shadow_start_color);
+        setTint(holder.upvote,context, R.color.cardview_shadow_start_color);
+
         if (holder.song.getVoted().equals("up")){
             setTint(holder.upvote, context, R.color.colorAccent);
             setTint(holder.downvote, context, R.color.cardview_shadow_start_color);

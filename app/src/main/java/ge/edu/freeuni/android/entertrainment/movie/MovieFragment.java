@@ -103,6 +103,7 @@ public class MovieFragment extends Fragment implements OnListFragmentInteraction
     @Override
     public void onListFragmentInteraction(Song media) {
         String url = HOST +"/webapi/mediastream/video/"+media.getId();
+        System.out.println(url);
         Player.start(getContext(),url);
     }
 

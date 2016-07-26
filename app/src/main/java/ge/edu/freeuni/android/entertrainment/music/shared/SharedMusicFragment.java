@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import java.util.List;
+
 import ge.edu.freeuni.android.entertrainment.MainApplication;
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.music.PlayerService;
@@ -83,7 +85,11 @@ public class SharedMusicFragment extends Fragment {
             public void onClick(View view) {
                 MainApplication application = (MainApplication) getActivity().getApplication();
                 if (!application.isPlaying()){
-                    PlayerService.startActionStart(getActivity(),local1,musicProvider.getSongs().get(0).getName());
+                    List<Song> songs = musicProvider.getSongs();
+                    if (songs.size() != 0) {
+                        Song song = songs.get(0);
+                        PlayerService.startActionStart(getActivity(), local1, song.getName());
+                    }
                 }else {
                     PlayerService.startActionStop(getActivity());
                 }
