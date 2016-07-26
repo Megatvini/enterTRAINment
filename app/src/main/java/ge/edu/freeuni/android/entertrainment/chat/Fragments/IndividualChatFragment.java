@@ -167,16 +167,20 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
 
     @Override
     public void onDestroyView() {
+        if (randomChatDataSource != null) {
+            randomChatDataSource.clearListeners();
+            randomChatDataSource.closeConnection();
+        }
         super.onDestroyView();
-        randomChatDataSource.clearListeners();
-        randomChatDataSource.closeConnection();
     }
 
     @Override
     public void onDestroy() {
+        if (randomChatDataSource != null) {
+            randomChatDataSource.clearListeners();
+            randomChatDataSource.closeConnection();
+        }
         super.onDestroy();
-        randomChatDataSource.clearListeners();
-        randomChatDataSource.closeConnection();
     }
 
     public void usernameUpdated() {

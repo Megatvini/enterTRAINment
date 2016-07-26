@@ -127,16 +127,20 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
 
     @Override
     public void onDestroyView() {
+        if (groupChatDataSource != null) {
+            groupChatDataSource.clearListeners();
+            groupChatDataSource.closeConnection();
+        }
         super.onDestroyView();
-        groupChatDataSource.clearListeners();
-        groupChatDataSource.closeConnection();
     }
 
     @Override
     public void onDestroy() {
+        if (groupChatDataSource != null) {
+            groupChatDataSource.clearListeners();
+            groupChatDataSource.closeConnection();
+        }
         super.onDestroy();
-        groupChatDataSource.clearListeners();
-        groupChatDataSource.closeConnection();
     }
 
     @Override
