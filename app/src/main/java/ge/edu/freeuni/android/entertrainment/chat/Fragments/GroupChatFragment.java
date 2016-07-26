@@ -1,10 +1,8 @@
 package ge.edu.freeuni.android.entertrainment.chat.Fragments;
 
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ import ge.edu.freeuni.android.entertrainment.chat.helper.VerticalSpaceItemDecora
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatEntry;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatUpdateListener;
 import ge.edu.freeuni.android.entertrainment.chat.model.GroupChatDataSource;
+import ge.edu.freeuni.android.entertrainment.events.UsernameChangedEvent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,6 +97,8 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
 
         spinner = (ProgressBar) view.findViewById(R.id.progressBar1);
 
+        EventBus.getDefault().register(this);
+
         return view;
     }
 
@@ -103,33 +108,6 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
             if (chatAdapter != null)
                 chatAdapter.setUsername(username);
         }
-    }
-
-
-    protected void showInputDialog() {
-        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-        View promptView = layoutInflater.inflate(R.layout.username_input_dialog, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-        alertDialogBuilder.setView(promptView);
-
-        final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
-        alertDialogBuilder.setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        username = editText.getText().toString();
-                        if (username.replace(" ", "").equals(""))
-                            username = null;
-                    }
-                })
-                .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-        AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
     }
 
     @Override
@@ -176,5 +154,11 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
 
     public void usernameUpdated() {
         initUsername();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(UsernameChangedEvent event) {
+        username = event.getNewUsername();
+        chatAdapter.setUsername(username);
     }
 }

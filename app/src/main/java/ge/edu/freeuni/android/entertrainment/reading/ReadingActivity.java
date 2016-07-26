@@ -18,7 +18,7 @@ import java.io.File;
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager;
 import es.voghdev.pdfviewpager.library.remote.DownloadFile;
 import ge.edu.freeuni.android.entertrainment.R;
-import ge.edu.freeuni.android.entertrainment.ShareEvent;
+import ge.edu.freeuni.android.entertrainment.events.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 public class ReadingActivity extends AppCompatActivity implements DownloadFile.Listener {

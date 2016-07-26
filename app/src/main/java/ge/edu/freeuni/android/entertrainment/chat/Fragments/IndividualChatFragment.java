@@ -18,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +33,7 @@ import ge.edu.freeuni.android.entertrainment.chat.helper.VerticalSpaceItemDecora
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatEntry;
 import ge.edu.freeuni.android.entertrainment.chat.model.ChatUpdateListener;
 import ge.edu.freeuni.android.entertrainment.chat.model.RandomChatDataSource;
+import ge.edu.freeuni.android.entertrainment.events.UsernameChangedEvent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -112,6 +117,9 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
         });
 
         chatInputLayout = (LinearLayout) view.findViewById(R.id.random_chat_input_layout);
+
+        EventBus.getDefault().register(this);
+
         return view;
     }
 
@@ -199,5 +207,11 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
 
     public void usernameUpdated() {
         initUsername();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(UsernameChangedEvent event) {
+        username = event.getNewUsername();
+        chatAdapter.setUsername(username);
     }
 }
