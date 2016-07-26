@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
+import ge.edu.freeuni.android.entertrainment.MainActivity;
 import ge.edu.freeuni.android.entertrainment.R;
 
 /**
@@ -39,4 +40,10 @@ public class BookQRFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getNavigationView().getMenu().findItem(R.id.nav_reading).setChecked(true);
+    }
 }

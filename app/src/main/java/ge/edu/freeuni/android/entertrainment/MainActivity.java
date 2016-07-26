@@ -106,9 +106,9 @@ public class MainActivity extends AppCompatActivity
             MainFragment mainFragment = MainFragment.newInstance();
             fragmentTransaction.replace(R.id.fragment_container,mainFragment);
             fragmentTransaction.commit();
+            navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+
         }
-        String songName;
-// assign the song name to songName
 
     }
 
@@ -212,5 +212,9 @@ public class MainActivity extends AppCompatActivity
         Intent i = new Intent(MainActivity.this, ReadingActivity.class);
         i.putExtra("url", url);
         startActivity(i);
+    }
+
+    public NavigationView getNavigationView() {
+        return navigationView;
     }
 }

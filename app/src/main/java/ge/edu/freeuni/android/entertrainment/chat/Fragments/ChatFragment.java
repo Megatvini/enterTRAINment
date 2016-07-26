@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import ge.edu.freeuni.android.entertrainment.MainActivity;
 import ge.edu.freeuni.android.entertrainment.R;
 import ge.edu.freeuni.android.entertrainment.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Constants;
@@ -166,5 +167,12 @@ public class ChatFragment extends Fragment {
             String title = "chatting with passengers...";
             Utils.shareStringData(getContext(), data, title);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getNavigationView().getMenu().findItem(R.id.nav_chat).setChecked(true);
     }
 }

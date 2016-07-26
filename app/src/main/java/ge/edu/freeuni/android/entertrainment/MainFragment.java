@@ -82,4 +82,11 @@ public class MainFragment extends Fragment {
         return view;
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getNavigationView().getMenu().findItem(R.id.nav_home).setChecked(true);
+    }
 }
