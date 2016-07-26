@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/group_chat_item_username"
         android:background="@drawable/bubble_outgoing">
 
@@ -24,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingRight="@dimen/message_padding_tale_side"
+            android:paddingEnd="@dimen/message_padding_tale_side"
             android:layout_margin="@dimen/message_margin"
             android:autoLink="web"/>
     </FrameLayout>
@@ -35,7 +37,8 @@
         android:textSize="@dimen/username_text_size"
         android:textStyle="bold"
         tools:text="Megatvini"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
     <TextView
         android:id="@+id/group_chat_item_date"
@@ -47,6 +50,7 @@
 
         android:layout_alignBaseline="@id/group_chat_item_username"
         android:textSize="@dimen/chat_date_text_size"
-        android:layout_toLeftOf="@+id/group_chat_item_username" />
+        android:layout_toLeftOf="@+id/group_chat_item_username"
+        android:layout_toStartOf="@+id/group_chat_item_username"/>
 
 </RelativeLayout>

@@ -67,7 +67,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         holder.date.setText(chatEntry.getTimeText());
 
         if (chatEntry.getUsername().equals(myUsername)) {
-            holder.username.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+            holder.username.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
         } else {
             holder.username.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
         }

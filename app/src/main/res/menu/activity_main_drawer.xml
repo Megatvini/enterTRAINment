@@ -28,7 +28,7 @@
             android:title="Movies" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Communicate" >
         <menu>
             <item
                 android:id="@+id/nav_share"
