@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/appbar_padding_top"
     android:elevation="10dp"
     xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
@@ -17,7 +18,8 @@
             android:orientation="horizontal"
             android:layout_width="0dp"
             android:weightSum="12"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:baselineAligned="false">
             <RelativeLayout
                 android:layout_weight="4"
                 android:layout_width="0dp"
@@ -30,13 +32,31 @@
                     android:layout_height="50dp"
                     android:contentDescription="@string/song_image" />
             </RelativeLayout>
-            <TextView
-                android:gravity="center"
-                android:id="@+id/song_name"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_weight="8"
-                tools:text="song namadasd asd asdasdasd asd asd asd sade"
                 android:layout_width="0dp"
-                android:layout_height="match_parent" />
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="17sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/song_name"
+                    tools:text="song name "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="14sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/song_author"
+                    tools:text="song "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <RelativeLayout

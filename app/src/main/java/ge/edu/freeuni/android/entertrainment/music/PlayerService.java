@@ -16,7 +16,6 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.NotificationCompat;
 
 import java.io.IOException;
@@ -111,15 +110,9 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
             Intent intent = new Intent(getApplicationContext(), PlayerService.class);
             intent.setAction(ACTION_STOP);
             PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 1, intent, 0);
-            String[] split = songName.split("-");
-            String title;
-            String artist = "unknown";
-            if(split.length > 1){
-                title = split[0];
-                artist = split[1];
-            }else {
-                title = songName;
-            }
+            NameInfo nameInfo = new NameInfo(songName).invoke();
+            String title = nameInfo.getTitle();
+            String artist = nameInfo.getArtist();
             Notification.Builder builder = new Notification.Builder(this)
                     .setSmallIcon(R.drawable.ic_audiotrack_black_24dp)
                     .setVisibility(Notification.VISIBILITY_PUBLIC)
@@ -332,5 +325,35 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
             mSession.release();
         }
         return super.onUnbind(intent);
+    }
+
+    public static class NameInfo {
+        private String title;
+        private String artist;
+        private String songName;
+
+        public NameInfo(String songName){
+            this.songName = songName;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getArtist() {
+            return artist;
+        }
+
+        public NameInfo invoke() {
+            String[] split = songName.split("-");
+            artist = "unknown";
+            if(split.length > 1){
+                title = split[0];
+                artist = split[1];
+            }else {
+                title = songName;
+            }
+            return this;
+        }
     }
 }
