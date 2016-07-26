@@ -1,6 +1,5 @@
 package ge.edu.freeuni.android.entertrainment.movie;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -13,13 +12,13 @@ import android.widget.VideoView;
 import ge.edu.freeuni.android.entertrainment.R;
 
 public class Player extends AppCompatActivity {
-    private VideoView myVideoView;
+    private MediaPlayer mediaPlayer;
 
     private int position = 0;
 
-    private ProgressDialog progressDialog;
 
     private MediaController mediaControls;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,53 +27,53 @@ public class Player extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String path = intent.getStringExtra("path");
-//set the media controller buttons
+        path = intent.getStringExtra("path");
+
+        if(savedInstanceState != null){
+            position = savedInstanceState.getInt("position");
+            path = savedInstanceState.getString("path");
+
+        }
+
+
         if (mediaControls == null) {
             mediaControls = new MediaController(Player.this);
         }
 
         //initialize the VideoView
-        myVideoView = (VideoView) findViewById(R.id.video_view);
-
-        // create a progress bar while the video file is loading
-        progressDialog = new ProgressDialog(Player.this);
-        // set a title for the progress bar
-        progressDialog.setTitle("JavaCodeGeeks Android Video View Example");
-        // set a message for the progress bar
-        progressDialog.setMessage("Loading...");
-        //set the progress bar not cancelable on users' touch
-        progressDialog.setCancelable(false);
-        // show the progress bar
-        progressDialog.show();
+        final VideoView videoView = (VideoView) findViewById(R.id.video_view);
 
         try {
             //set the media controller in the VideoView
-            myVideoView.setMediaController(mediaControls);
-
-
-            myVideoView.setVideoPath(path);
+            videoView.setMediaController(mediaControls);
+            videoView.setVideoPath(path);
 
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
 
-        myVideoView.requestFocus();
+        videoView.requestFocus();
+
         //we also set an setOnPreparedListener in order to know when the video file is ready for playback
-        myVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
             public void onPrepared(MediaPlayer mediaPlayer) {
-                // close the progress bar and play the video
-                progressDialog.dismiss();
-                //if we have a position on savedInstanceState, the video playback should start from here
-                myVideoView.seekTo(position);
-                if (position == 0) {
-                    myVideoView.start();
-                } else {
-                    //if we come from a resumed activity, video playback will be paused
-                    myVideoView.pause();
-                }
+                Player.this.mediaPlayer = mediaPlayer;
+                System.out.println(position);
+                Player.this.mediaPlayer = mediaPlayer;
+
+                videoView.seekTo(position);
+                videoView.start();
+
+                mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                    @Override
+                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+
+                        // Re-Set the videoView that acts as the anchor for the MediaController
+                        mediaControls.setAnchorView(videoView);
+                    }
+                });
             }
         });
 
@@ -86,4 +85,20 @@ public class Player extends AppCompatActivity {
         context.startActivity(starter);
     }
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        System.out.println("on save state");
+        super.onSaveInstanceState(outState);
+        outState.putInt("position",mediaPlayer.getCurrentPosition());
+        outState.putString("path",path);
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
 }
