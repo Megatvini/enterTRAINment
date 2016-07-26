@@ -168,6 +168,7 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
         findPairButton.setVisibility(View.VISIBLE);
         chatInputLayout.setVisibility(View.GONE);
         Utils.hideSoftKeyboard(getActivity());
+        Toast.makeText(getContext(), "Peer closed connection...", Toast.LENGTH_SHORT).show();
     }
 
     @Override

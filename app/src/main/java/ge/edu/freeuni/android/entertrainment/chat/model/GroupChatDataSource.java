@@ -16,10 +16,9 @@ public class GroupChatDataSource extends ChatDataSource{
 
     public GroupChatDataSource() {
         super();
-        initWebsocketConnection();
     }
 
-    private void initWebsocketConnection() {
+    public void initWebSocketConnection() {
         String url = "ws://" + Constants.SERVER_ADDRESS + "/webapi/groupchat";
         webSocketFuture = AsyncHttpClient.getDefaultInstance()
                 .websocket(url, "my-protocol", new AsyncHttpClient.WebSocketConnectCallback() {
