@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity
             replaceFragmentContainer(new MovieFragment());
         } else if (id == R.id.nav_share) {
             EventBus.getDefault().post(new ShareEvent());
+            item.setChecked(false);
         }
 
         drawer.closeDrawer(GravityCompat.START);

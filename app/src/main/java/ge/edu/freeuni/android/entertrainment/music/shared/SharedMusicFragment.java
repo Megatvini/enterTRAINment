@@ -203,4 +203,12 @@ public class SharedMusicFragment extends Fragment {
 
         }
     }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
+    }
+
+
 }
