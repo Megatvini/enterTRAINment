@@ -1,7 +1,7 @@
 package ge.edu.freeuni.android.entertrainment;
 
-import android.content.SharedPreferences;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,8 +20,12 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
@@ -29,15 +33,10 @@ import ge.edu.freeuni.android.entertrainment.map.MapFragment;
 import ge.edu.freeuni.android.entertrainment.map.NotificationGenerator;
 import ge.edu.freeuni.android.entertrainment.movie.MovieFragment;
 import ge.edu.freeuni.android.entertrainment.music.MusicFragment;
-import ge.edu.freeuni.android.entertrainment.music.shared.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
+import ge.edu.freeuni.android.entertrainment.music.shared.SharedMusicFragment;
 import ge.edu.freeuni.android.entertrainment.reading.BookQRFragment;
 import ge.edu.freeuni.android.entertrainment.reading.ReadingActivity;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChatFragment.OnFragmentInteractionListener,
@@ -100,6 +99,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
 
         if (savedInstanceState == null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -165,8 +165,6 @@ public class MainActivity extends AppCompatActivity
             replaceFragmentContainer(new MovieFragment());
         } else if (id == R.id.nav_share) {
             EventBus.getDefault().post(new ShareEvent());
-        } else if (id == R.id.nav_share) {
-            return false;
         }
 
         drawer.closeDrawer(GravityCompat.START);
