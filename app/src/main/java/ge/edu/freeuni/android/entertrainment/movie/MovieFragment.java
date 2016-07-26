@@ -1,6 +1,8 @@
 package ge.edu.freeuni.android.entertrainment.movie;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -100,8 +102,12 @@ public class MovieFragment extends Fragment implements OnListFragmentInteraction
     @Override
     public void onListFragmentInteraction(Song media) {
         String url = HOST +"/webapi/mediastream/video/"+media.getId();
-        System.out.println(url);
-        Player.start(getContext(),url);
+//        System.out.println(url);
+//        Player.start(getContext(),url);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.setDataAndType(Uri.parse(url), "video/mp4");
+        startActivity(intent);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
