@@ -49,20 +49,21 @@ public class MovieFragment extends Fragment implements OnListFragmentInteraction
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
-            provider = new MovieProvider();
-            adapter = new MovieRecyclerViewAdapter(provider.getMovies(),mListener);
-            recyclerView.setAdapter(adapter);
-            provider.setRecyclerViewAdapter(adapter);
-        }
+        View parentView = inflater.inflate(R.layout.fragment_movie_list, container, false);
+
+        RecyclerView recyclerView = (RecyclerView) parentView.findViewById(R.id.list);
+
+        Context context = parentView.getContext();
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
+        provider = new MovieProvider();
+        adapter = new MovieRecyclerViewAdapter(provider.getMovies(),mListener);
+        recyclerView.setAdapter(adapter);
+        provider.setRecyclerViewAdapter(adapter);
+
 
 
         EventBus.getDefault().register(this);
-        return view;
+        return parentView;
     }
 
     @Override
