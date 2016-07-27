@@ -29,4 +29,5 @@
     <dimen name="message_margin">6dp</dimen>
     <dimen name="bubble_message_padding_inside">60dp</dimen>
     <dimen name="bubble_message_padding_outside">8dp</dimen>
+    <dimen name="main_fragment_btn_elevation">3dp</dimen>
 </resources>

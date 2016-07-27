@@ -36,4 +36,5 @@
     <string name="map">map</string>
     <string name="reading_qr_fragment_read_qr">Scan your code</string>
     <string name="action_change_username">change username</string>
+    <string name="app_background">app background</string>
 </resources>

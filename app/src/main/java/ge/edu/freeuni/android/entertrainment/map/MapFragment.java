@@ -175,8 +175,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     private void addMarker(LatLng coord, String city) {
 
-        int height = 100;
-        int width = 200;
+        int height = 90;
+        int width = 180;
         BitmapDrawable bitmapdraw=(BitmapDrawable) ResourcesCompat.getDrawable(getResources(), R.drawable.station_pointer, null);;
         Bitmap b = bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
