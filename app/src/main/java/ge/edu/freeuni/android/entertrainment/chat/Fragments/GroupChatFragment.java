@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.koushikdutta.async.callback.CompletedCallback;
+import com.koushikdutta.async.http.WebSocket;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -165,6 +168,16 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
     public void onMessageEvent(UsernameChangedEvent event) {
         username = event.getNewUsername();
         chatAdapter.setUsername(username);
+        WebSocket webSocket = groupChatDataSource.getWebSocket();
+        if (webSocket != null) {
+            webSocket.setClosedCallback(new CompletedCallback() {
+                @Override
+                public void onCompleted(Exception ignored) {
+
+                }
+            });
+            webSocket.close();
+        }
         groupChatDataSource.initWebSocketConnection();
         chatAdapter.clearEntries();
     }

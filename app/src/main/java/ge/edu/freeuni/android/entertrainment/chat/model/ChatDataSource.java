@@ -67,4 +67,10 @@ public class ChatDataSource {
         if (webSocket != null)
             webSocket.close();
     }
+
+    public WebSocket getWebSocket() {
+        if (webSocketFuture == null)
+            return null;
+        return webSocketFuture.tryGet();
+    }
 }
