@@ -37,12 +37,6 @@ public class Utils {
         }
     }
 
-    public static void runInMain2 (Context context, Runnable runnable){
-        Handler mainHandler = new Handler(context.getMainLooper());
-
-        mainHandler.post(runnable);
-    }
-
     public static void saveUsernameInSharedPreferences(Context context, JSONObject response) {
         try {
             String username = response.getString("username");

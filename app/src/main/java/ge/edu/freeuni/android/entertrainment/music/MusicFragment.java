@@ -50,7 +50,6 @@ public class MusicFragment extends Fragment{
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        EventBus.getDefault().register(this);
 
         return view;
     }
@@ -116,13 +115,4 @@ public class MusicFragment extends Fragment{
         }
     }
 
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(ShareEvent event) {
-        if (isVisible()) {
-            String data = "Share about music";
-            String title = "Listening to music in train";
-            Utils.shareStringData(getContext(), title, data);
-        }
-    }
 }
