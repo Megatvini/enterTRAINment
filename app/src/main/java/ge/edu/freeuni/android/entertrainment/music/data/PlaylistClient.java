@@ -14,6 +14,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
+import static ge.edu.freeuni.android.entertrainment.chat.Utils.getRandomId;
 import static ge.edu.freeuni.android.entertrainment.chat.Utils.getSongsFromJsonArray;
 
 public class PlaylistClient {
@@ -30,7 +31,7 @@ public class PlaylistClient {
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.add("id", Utils.getRandomId(musicProvider.getContext()));
-        asyncHttpClient.get(path,null,new JsonHttpResponseHandler(){
+        asyncHttpClient.get(path,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 handleNewPlaylistData(response);
@@ -46,16 +47,12 @@ public class PlaylistClient {
     public void vote(String path){
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.add("id", Utils.getRandomId(musicProvider.getContext()));
+
         System.out.println(path);
-        asyncHttpClient.post(path, params, new AsyncHttpResponseHandler() {
+        params.add("id",getRandomId(this.musicProvider.getContext()));
+        asyncHttpClient.post(path, params, new JsonHttpResponseHandler(){
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
             }
         });
