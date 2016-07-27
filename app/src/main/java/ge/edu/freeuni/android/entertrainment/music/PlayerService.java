@@ -345,6 +345,11 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
         }
 
         public NameInfo invoke() {
+            if (songName == null){
+                artist = "unknown";
+                title = "unknown";
+                return this;
+            }
             String[] split = songName.split("-");
             artist = "unknown";
             if(split.length > 1){
