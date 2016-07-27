@@ -4,12 +4,14 @@ package ge.edu.freeuni.android.entertrainment.music.data;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 import static ge.edu.freeuni.android.entertrainment.chat.Utils.getSongsFromJsonArray;
 
@@ -25,6 +27,8 @@ public class PlaylistClient {
     public void loadPlaylist(String path){
         System.out.println(path);
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.add("id", Utils.getRandomId(musicProvider.getContext()));
         asyncHttpClient.get(path,null,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
