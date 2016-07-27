@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -144,6 +145,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
     public void connectionClosed() {
         groupChatDataSource.initWebSocketConnection();
         chatAdapter.clearEntries();
+        Toast.makeText(getContext(), "Reinitializing Connection ...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -160,5 +162,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
     public void onMessageEvent(UsernameChangedEvent event) {
         username = event.getNewUsername();
         chatAdapter.setUsername(username);
+        groupChatDataSource.initWebSocketConnection();
+        chatAdapter.clearEntries();
     }
 }

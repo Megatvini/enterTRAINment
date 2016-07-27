@@ -213,5 +213,11 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
     public void onMessageEvent(UsernameChangedEvent event) {
         username = event.getNewUsername();
         chatAdapter.setUsername(username);
+        spinner.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
+        chatAdapter.clearEntries();
+        findPairButton.setVisibility(View.VISIBLE);
+        chatInputLayout.setVisibility(View.GONE);
+        Utils.hideSoftKeyboard(getActivity());
     }
 }

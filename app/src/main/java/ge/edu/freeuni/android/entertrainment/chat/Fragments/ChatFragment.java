@@ -18,8 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,9 +35,9 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.MainActivity;
 import ge.edu.freeuni.android.entertrainment.R;
-import ge.edu.freeuni.android.entertrainment.events.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Constants;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
+import ge.edu.freeuni.android.entertrainment.events.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.events.UsernameChangedEvent;
 
 
@@ -224,8 +226,9 @@ public class ChatFragment extends Fragment {
                         String username = editText.getText().toString();
                         username = username.replace(" ", "");
                         if (!username.equals("")) {
-                            Utils.saveUsernameInSharedPreferences(getContext(), username);
-                            EventBus.getDefault().post(new UsernameChangedEvent(username));
+                           try_ask_server(username);
+                        } else {
+                            Toast.makeText(getContext(), "Enter something non-empty", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -238,5 +241,24 @@ public class ChatFragment extends Fragment {
 
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
+    }
+
+    private void try_ask_server(final String username) {
+        String url = "http://" + Constants.SERVER_ADDRESS + "/webapi/chatname/check/" + username;
+        url = url + "?oldname=" + Utils.readUsernameFromPreferences(getContext());
+        AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+        asyncHttpClient.get(url, null, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if (statusCode == 200) {
+                    Utils.saveUsernameInSharedPreferences(getContext(), username);
+                    EventBus.getDefault().post(new UsernameChangedEvent(username));
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 }
