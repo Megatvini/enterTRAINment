@@ -9,8 +9,8 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -137,9 +137,9 @@ public class Utils {
     }
 
 
-    public static void animateViewScale(final ImageView imageView) {
-        imageView.clearAnimation();
-        imageView.animate()
+    public static void animateViewScale(final View view) {
+        view.clearAnimation();
+        view.animate()
                 .scaleX(0.3f)
                 .scaleY(0.3f)
                 .setListener(new Animator.AnimatorListener() {
@@ -150,7 +150,7 @@ public class Utils {
 
                     @Override
                     public void onAnimationEnd(Animator animator) {
-                        imageView.animate()
+                        view.animate()
                                 .scaleX(1f)
                                 .scaleY(1f)
                                 .start();
