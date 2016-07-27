@@ -1,4 +1,4 @@
-package ge.edu.freeuni.android.entertrainment;
+package ge.edu.freeuni.android.entertrainment.events;
 
 /**
  * Created by Nika Doghonadze.

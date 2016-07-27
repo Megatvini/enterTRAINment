@@ -41,7 +41,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.MainActivity;
 import ge.edu.freeuni.android.entertrainment.R;
-import ge.edu.freeuni.android.entertrainment.ShareEvent;
+import ge.edu.freeuni.android.entertrainment.events.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {

@@ -17,7 +17,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import ge.edu.freeuni.android.entertrainment.MainActivity;
 import ge.edu.freeuni.android.entertrainment.R;
-import ge.edu.freeuni.android.entertrainment.ShareEvent;
+import ge.edu.freeuni.android.entertrainment.events.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 

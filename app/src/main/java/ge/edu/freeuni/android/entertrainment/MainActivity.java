@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
+import ge.edu.freeuni.android.entertrainment.events.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
 import ge.edu.freeuni.android.entertrainment.map.MapFragment;
 import ge.edu.freeuni.android.entertrainment.map.NotificationGenerator;
