@@ -50,7 +50,12 @@ public class GroupChatDataSource extends ChatDataSource{
                         if (ex != null)
                             ex.printStackTrace();
                         Log.d("Websocket", "has closed");
-                        notifyListenersConnectionClosed();
+                        Utils.runInMain(new Runnable() {
+                            @Override
+                            public void run() {
+                                notifyListenersConnectionClosed();
+                            }
+                        });
                     }
                 });
             }

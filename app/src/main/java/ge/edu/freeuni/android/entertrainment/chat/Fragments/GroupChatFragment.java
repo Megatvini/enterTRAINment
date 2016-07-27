@@ -69,7 +69,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(Constants.CHAT_ITEM_DIVIDER_HEIGHT));
         recyclerView.setAdapter(chatAdapter);
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.group_chat_btn_send_text);
+        final ImageView imageView = (ImageView) view.findViewById(R.id.group_chat_btn_send_text);
         final EditText editText = (EditText) view.findViewById(R.id.group_chat_edit_text);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +82,8 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
                 String text = editText.getText().toString();
                 if (text.equals(""))
                     return;
+
+                Utils.animateViewScale(imageView);
 
                 ChatEntry chatEntry = new ChatEntry(username, text, System.currentTimeMillis());
                 groupChatDataSource.sendMessage(chatEntry);
@@ -117,6 +119,7 @@ public class GroupChatFragment extends Fragment implements ChatUpdateListener{
             groupChatDataSource.clearListeners();
             groupChatDataSource.closeConnection();
         }
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 

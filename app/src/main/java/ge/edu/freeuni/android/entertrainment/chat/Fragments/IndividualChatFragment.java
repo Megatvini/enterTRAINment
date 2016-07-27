@@ -75,7 +75,7 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(Constants.CHAT_ITEM_DIVIDER_HEIGHT));
         recyclerView.setAdapter(chatAdapter);
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.random_chat_btn_send_text);
+        final ImageView imageView = (ImageView) view.findViewById(R.id.random_chat_btn_send_text);
         final EditText editText = (EditText) view.findViewById(R.id.random_chat_edit_text);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +91,8 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
                         spinner.getVisibility() == View.VISIBLE)
                     return;
 
+
+                Utils.animateViewScale(imageView);
                 ChatEntry chatEntry = new ChatEntry(username, text, System.currentTimeMillis());
                 randomChatDataSource.sendMessage(chatEntry);
                 editText.setText("");
@@ -193,6 +195,7 @@ public class IndividualChatFragment extends Fragment implements ChatUpdateListen
             randomChatDataSource.clearListeners();
             randomChatDataSource.closeConnection();
         }
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 

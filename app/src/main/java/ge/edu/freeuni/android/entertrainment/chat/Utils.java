@@ -1,5 +1,6 @@
 package ge.edu.freeuni.android.entertrainment.chat;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -107,5 +109,38 @@ public class Utils {
                         Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+
+    public static void animateViewScale(final ImageView imageView) {
+        imageView.clearAnimation();
+        imageView.animate()
+                .scaleX(0.3f)
+                .scaleY(0.3f)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        imageView.animate()
+                                .scaleX(1f)
+                                .scaleY(1f)
+                                .start();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                })
+                .start();
     }
 }

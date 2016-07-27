@@ -22,13 +22,12 @@ import java.util.List;
 
 import ge.edu.freeuni.android.entertrainment.MainApplication;
 import ge.edu.freeuni.android.entertrainment.R;
-import ge.edu.freeuni.android.entertrainment.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.chat.Utils;
+import ge.edu.freeuni.android.entertrainment.events.ShareEvent;
 import ge.edu.freeuni.android.entertrainment.music.PlayerService;
 import ge.edu.freeuni.android.entertrainment.music.data.MusicProvider;
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
 
-import static ge.edu.freeuni.android.entertrainment.R.drawable.na;
 import static ge.edu.freeuni.android.entertrainment.chat.Constants.HOST;
 
 public class SharedMusicFragment extends Fragment {
@@ -202,5 +201,11 @@ public class SharedMusicFragment extends Fragment {
             }
 
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
     }
 }
