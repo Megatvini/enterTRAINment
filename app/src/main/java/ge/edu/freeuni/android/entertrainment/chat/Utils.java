@@ -1,6 +1,7 @@
 package ge.edu.freeuni.android.entertrainment.chat;
 
 import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +18,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import ge.edu.freeuni.android.entertrainment.music.data.Song;
+
+import static ge.edu.freeuni.android.entertrainment.chat.Constants.RANDOM_ID_KEY;
 
 /**
  * Created by Nika Doghonadze.
@@ -37,6 +41,27 @@ public class Utils {
         } else {
             runnable.run();
         }
+    }
+
+    public static void initRandomId(Context context){
+        if(getRandomId(context)== null){
+            saveRandomId(context);
+        }
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    public static void saveRandomId(Context context) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString(Constants.RANDOM_ID_KEY, UUID.randomUUID().toString());
+        edit.commit();
+    }
+
+    public static String getRandomId(Context context) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(RANDOM_ID_KEY, null);
     }
 
     public static void saveUsernameInSharedPreferences(Context context, JSONObject response) {
@@ -61,20 +86,20 @@ public class Utils {
     public static List<Song> getSongsFromJsonArray(JSONArray response) {
         int length = response.length();
         List<Song> songList = new ArrayList<>();
-        if (length >=1) {
-            for (int i = 0; i < length; i++) {
-                try {
-                    JSONObject musicJson = (JSONObject) response.get(i);
-                    Song song = new Song(musicJson.getString("voted"),musicJson.getString("id"), musicJson.getString("name"), musicJson.getInt("rating"), musicJson.getString("imagePath"));
-                    songList.add(song);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-
+        try {
+            parseJson(response, length, songList);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return songList;
+    }
+
+    private static void parseJson(JSONArray response, int length, List<Song> songList) throws JSONException {
+        for (int i = 0; i < length; i++) {
+            JSONObject musicJson = (JSONObject) response.get(i);
+            Song song = new Song(musicJson.getString("voted"),musicJson.getString("id"), musicJson.getString("name"), musicJson.getInt("rating"), musicJson.getString("imagePath"));
+            songList.add(song);
+        }
     }
 
     public static void saveReadingPage(Context context, String url, int page) {

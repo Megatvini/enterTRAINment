@@ -57,7 +57,6 @@ public class MusicFragment extends Fragment{
 
     @Override
     public void onDestroyView() {
-        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 

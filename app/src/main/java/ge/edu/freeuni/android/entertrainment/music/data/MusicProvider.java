@@ -12,6 +12,7 @@ import ge.edu.freeuni.android.entertrainment.music.VoteListener;
 public class MusicProvider implements  VoteListener {
 
     private PlaylistClient playlistClient;
+    private Context context;
     private String path;
 
     private SharedMusicRecyclerViewAdapter sharedAdapter;
@@ -20,6 +21,7 @@ public class MusicProvider implements  VoteListener {
     private List<Song> songs = new ArrayList<>();
 
     public MusicProvider(Context context, String path){
+        this.context = context;
         this.path = path;
         playlistClient = new PlaylistClient(this);
     }
@@ -66,5 +68,7 @@ public class MusicProvider implements  VoteListener {
         }
     }
 
-
+    public Context getContext() {
+        return context;
+    }
 }

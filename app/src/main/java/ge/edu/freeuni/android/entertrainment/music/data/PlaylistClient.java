@@ -4,12 +4,15 @@ package ge.edu.freeuni.android.entertrainment.music.data;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 
 import static ge.edu.freeuni.android.entertrainment.chat.Utils.getSongsFromJsonArray;
 
@@ -25,6 +28,8 @@ public class PlaylistClient {
     public void loadPlaylist(String path){
         System.out.println(path);
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.add("id", Utils.getRandomId(musicProvider.getContext()));
         asyncHttpClient.get(path,null,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -37,22 +42,21 @@ public class PlaylistClient {
     public void upvote(String path){
         vote(path);
     }
+
     public void vote(String path){
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-        asyncHttpClient.post(path, null, new JsonHttpResponseHandler(){
+        RequestParams params = new RequestParams();
+        params.add("id", Utils.getRandomId(musicProvider.getContext()));
+        System.out.println(path);
+        asyncHttpClient.post(path, params, new AsyncHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                handleNewPlaylistData(response);
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
     }
@@ -61,8 +65,6 @@ public class PlaylistClient {
         List<Song> songList = getSongsFromJsonArray(response);
         if(songList.size() == 0 )
             return;
-        String voted = songList.get(0).getVoted();
-        System.out.println("souted : "+ voted);
         if(songList.size() != 0)
             PlaylistClient.this.musicProvider.onNewPlayListData(songList);
     }

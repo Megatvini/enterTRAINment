@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 import ge.edu.freeuni.android.entertrainment.chat.Fragments.ChatFragment;
 import ge.edu.freeuni.android.entertrainment.events.ShareEvent;
+import ge.edu.freeuni.android.entertrainment.chat.Utils;
 import ge.edu.freeuni.android.entertrainment.map.MapFragment;
 import ge.edu.freeuni.android.entertrainment.map.NotificationGenerator;
 import ge.edu.freeuni.android.entertrainment.movie.MovieFragment;
@@ -111,6 +112,8 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+        Utils.initRandomId(this);
+
     }
 
     @Override
@@ -166,6 +169,7 @@ public class MainActivity extends AppCompatActivity
             replaceFragmentContainer(new MovieFragment());
         } else if (id == R.id.nav_share) {
             EventBus.getDefault().post(new ShareEvent());
+            item.setChecked(false);
         }
 
         drawer.closeDrawer(GravityCompat.START);

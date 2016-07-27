@@ -195,8 +195,8 @@ public class SharedMusicFragment extends Fragment {
             List<Song> songs = musicProvider.getSongs();
             if (songs.size()!=0){
                 PlayerService.NameInfo nameInfo = new PlayerService.NameInfo(songs.get(0).getName());
-                String data = String.format(" %s  \n  %s ", nameInfo.getArtist(), nameInfo.getTitle());
-                String title = "Listening to  awesome song";
+                String data = String.format("%s \n %s", nameInfo.getArtist(), nameInfo.getTitle());
+                String title = "Listening to awesome song";
                 Utils.shareStringData(getContext(), title, data);
             }
 
@@ -208,4 +208,12 @@ public class SharedMusicFragment extends Fragment {
         EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
+    }
+
+
 }
